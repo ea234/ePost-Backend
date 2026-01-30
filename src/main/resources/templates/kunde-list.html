@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Kunden-Liste</title>
+        <link rel="stylesheet" th:href="@{/css/style.css}">
+    </head>
+    <body>
+        <h1>ePost - Kundenanzeige</h1>
+        
+        <p style="color: #666; font-size: 12px;">
+            Version <span th:text="${appVersion}">1.0.0</span>
+        </p>    
+        <p style="color: #666; font-size: 12px;">
+            Angemeldet als <span th:text="${benutzer.userName}">benutzer</span> <span th:text="${benutzer.vorName}">vorname</span>
+        </p>
+
+        <div class="actions">
+
+            <div class="actions-left">
+                <a th:href="@{/epost/logout}"  class="btn-primary">Log Out</a>
+                <a th:href="@{/vorgaenge}"     class="btn-primary">Vorgaenge</a>
+                <a th:href="@{/vorgangstypen}"        class="btn-primary">UIDs</a>
+            </div>  
+
+        </div>
+
+        <div class="status-bar">
+            
+            <div class="count" >
+                Anzahl Kunden <span th:text="${kunden.size()}">0</span>
+            </div>
+
+            <div class="message" id="vzMessage"></div>
+
+        </div>
+
+        <div th:if="${#lists.isEmpty(kunden)}" style="text-align: center; font-weight: bold; margin: 20px 0;">
+            Es sind keine Kunden vorhanden.
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Nummer</th>
+                    <th>Stammnummer</th>
+                    <th>Vorname</th>
+                    <th>Nachname</th>
+                    <th>eMail</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="kunde, iterStat : ${kunden}"
+                    th:class="${iterStat.odd} ? 'odd-row' : 'even-row'"
+                    >
+                    <td th:text="${iterStat.count}">1</td>        <!-- 1, 2, 3, ... -->        
+                    <td th:text="${kunde.stammNummer}">Max</td>
+                    <td th:text="${kunde.vorName}">Max</td>
+                    <td th:text="${kunde.nachName}">1</td>
+                    <td th:text="${kunde.email}">Max</td>
+
+                    <td>
+                        <a th:href="@{/kunde/{id}(id=${kunde.stammNummer})}">Details</a>
+                    </td>        
+
+                </tr>
+            </tbody>
+        </table>
+        
+        <div class="pagination">
+            <a th:if="${currentPage > 0}"  th:href="@{/kunden(page=${currentPage - 1})}">Zurück</a>
+
+            <span>Seite <span th:text="${currentPage + 1}">1</span>  von <span th:text="${totalPages}">10</span></span>
+
+            <a th:if="${currentPage + 1 < totalPages}"  th:href="@{/kunden(page=${currentPage + 1})}">Weiter</a>
+        </div>    
+
+    </body>
+</html>

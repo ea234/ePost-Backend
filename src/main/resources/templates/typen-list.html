@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Typen-Liste</title>
+        <link rel="stylesheet" th:href="@{/css/style.css}">
+    </head>
+    <body>
+        <h1>ePost - Liste Vorgangstypen</h1>
+        
+        <p style="color: #666; font-size: 12px;">
+            Version <span th:text="${appVersion}">1.0.0</span>
+        </p>    
+        <p style="color: #666; font-size: 12px;">
+            Angemeldet als <span th:text="${benutzer.userName}">benutzer</span> <span th:text="${benutzer.vorName}">vorname</span>
+        </p>
+
+        <div class="actions">
+
+            <div class="actions-left">
+                <a th:href="@{/epost/logout}"  class="btn-primary">Log Out</a>
+                <a th:href="@{/vorgaenge}"     class="btn-primary">Vorgaenge</a>
+                <a th:href="@{/kunden}"        class="btn-primary">Kunden</a>
+            </div>  
+
+        </div>
+
+        <div class="status-bar">
+            
+            <div class="count" >
+                Anzahl Vorgangstypen <span th:text="${vorgangstypen.size()}">0</span> von <span th:text="${vorgangstypen_gesamt}">0</span>
+            </div>
+
+            <div class="message" id="vzMessage"></div>
+
+        </div>
+
+        <div th:if="${#lists.isEmpty(vorgangstypen)}" style="text-align: center; font-weight: bold; margin: 20px 0;">
+            Es sind keine Vorgangstypen vorhanden.
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Nr.</th>
+                    <th>UID</th>
+                    <th>Langtext</th>
+                    <th>Kurztext</th>
+                    <th>Abteilung</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="vgtyp, iterStat : ${vorgangstypen}"
+                    th:class="${iterStat.odd} ? 'odd-row' : 'even-row'"
+                    >
+                    <td th:text="${iterStat.count}">1</td>        <!-- 1, 2, 3, ... -->        
+                    <td th:text="${vgtyp.typNr}">x</td>
+                    <td th:text="${vgtyp.typLangText}">x</td>
+                    <td th:text="${vgtyp.typKurzText}">x</td>
+                    <td th:text="${vgtyp.typAbteilung}">x</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <div class="pagination">
+            <a th:if="${currentPage > 0}"  th:href="@{/vorgangstypen(page=${currentPage - 1})}">Zurück</a>
+
+            <span>Seite <span th:text="${currentPage + 1}">1</span>  von <span th:text="${totalPages}">10</span></span>
+
+            <a th:if="${currentPage + 1 < totalPages}"  th:href="@{/vorgangstypen(page=${currentPage + 1})}">Weiter</a>
+        </div>    
+
+    </body>
+</html>

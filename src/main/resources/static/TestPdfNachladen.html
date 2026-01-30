@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <!-- Viewer-Container (integrierter PDF-Viewer des Browsers) -->
+
+    <style>
+        /* Zweispalt-Layout: Links Text, rechts PDF */
+        .vorgang_detail_container {
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* zwei Spalten gleicher Breite */
+            gap: 16px;
+            height: 100vh;
+            padding: 16px;
+            box-sizing: border-box;
+        }
+
+        .vorgang_detail_text_spalte {
+            overflow: auto;
+        }
+
+        .vorgang_detail_pdf_spalte {
+            /* Legt die gewünschte Größe der PDF-Anzeige fest */
+            display: flex;
+            justify-content: center;
+            align-items: start;
+            padding: 0;
+        }
+
+        /* Großes PDF-Fenster */
+        #pdfFrame1, #pdfFrame {
+            width: 100%;
+            height: calc(100vh - 40px); /* passt die Höhe an (oben ggf. Anpassung notwendig) */
+            border: 1px solid #ccc;
+        }
+
+        /* Optional: responsiveness für kleine Bildschirme */
+        @media (max-width: 900px) {
+            .vorgang_detail_container {
+                grid-template-columns: 1fr; /* Einspaltig auf kleinen Bildschirmen */
+                height: auto;
+            }
+            #pdfFrame1, #pdfFrame {
+                height: 600px;
+            }
+        }
+
+    </style>
+
+    <body>
+        <p></p>
+
+        <div class="vorgang_detail_container">
+
+            <section class="vorgang_detail_text_spalte">
+                <p>Hier kommt der Text links hin.</p>
+                <p>Beispieltext …</p>
+                <button id="btnLoadPDF" type="button">PDF nachladen</button>
+            </section>
+
+            <section class="vorgang_detail_pdf_spalte">
+                <iframe id="pdfFrame1" src="" allow="autoplay"></iframe>
+            </section>
+
+        </div>
+
+        <script>
+
+            // Pfad zum PDF auf dem Server (ggf. Thymeleaf-Variable nutzen)
+            var pdfUrl = ''; // initial leer
+
+            document.getElementById('btnLoadPDF').addEventListener('click', function () {
+                // URL dynamisch setzen, z. B. aus Thymeleaf:
+                // pdfUrl = /*[[${pdfPath}]]*/ '/files/my-document.pdf';
+                pdfUrl = 'http://localhost:8080/api/dokument/testGetStaticDokument';
+                
+                if ( !pdfUrl )  return;
+
+                var iframe = document.getElementById('pdfFrame1');
+                
+                iframe.src = pdfUrl;
+                
+                iframe.onload = function () {
+                    // optional: Meldung oder Loader entfernen
+                };
+            });
+        </script>
+    </body>
+</html>

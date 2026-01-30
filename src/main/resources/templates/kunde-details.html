@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Vorgang Details</title>
+        <link rel="stylesheet" th:href="@{/css/style.css}">
+    </head>
+    <body>
+        <h1>ePost - Kunden Details</h1>
+
+        <section class="vorgang_detail_text_spalte">
+
+            <div class="kunde-layout">
+                
+                <div class="kunde-card">
+                    <p><strong>Vorname</strong>      <span th:text="${kunde.vorName}"      >x</span></p>
+                    <p><strong>Nachname</strong>     <span th:text="${kunde.nachName}"     >x</span></p>
+                    <p><strong>eMail</strong>        <span th:text="${kunde.email}"        >x</span></p>
+                    <p><strong>Geburtsdatum</strong> <span th:text="${kunde.geburtsDatum}" >x</span></p>
+                </div>
+
+                <div class="adresse-card">
+                    <p><strong>Straße</strong> <span th:text="${adresse.strasse}"     >x</span></p>
+                    <p><strong>Ort</strong>    <span th:text="${adresse.ort}"         >x</span></p>
+                    <p><strong>PLZ</strong>    <span th:text="${adresse.postleitzahl}">x</span></p>
+                    <p><strong>Land</strong>   <span th:text="${adresse.land}"        >x</span></p>
+                </div>
+                
+            </div>
+
+        </section>
+
+        <p>Anzahl UH-Eintr&auml;ge <span th:text="${uh_liste.size()}">0</span></p>
+
+        <div th:if="${uh_liste == null or #lists.isEmpty(uh_liste)}">
+            Es sind keine UH-Eintr&auml;ge vorhanden.
+        </div>
+
+        <div th:if="${uh_liste == null or #lists.isEmpty(uh_liste)}">
+            <p>Keine UH-Einträge vorhanden.</p>
+        </div>
+
+        <table th:if="${uh_liste != null and !#lists.isEmpty(uh_liste)}" border="1">
+            <thead>
+                <tr>
+                    <th>Nr</th>
+                    <th>Vertrag Nr</th>
+                    <th>Paginier Nr</th>
+                    <th>Typ Kurz Text</th>
+                    <th>Bearbeiter</th>
+                    <th>Datum Eingang</th>
+                    <th>Datum erledigt</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="uh, iterStat: ${uh_liste}"
+                    
+                    th:class="${iterStat.odd} ? 'odd-row' : 'even-row'"
+                    >
+                    <td th:text="${iterStat.count}">1</td>
+                    <td th:text="${uh.vertragNummer}"></td>
+                    <td><a th:href="@{/api/dokument/paginr/{paginr}(paginr=${uh.paginierNr})}" target="_blank" > <span th:text="${uh.paginierNr}" >x</span> </a></td>
+                    <td th:text="${uh.typKurzText}"></td>
+                    <td th:text="${uh.bearbeiter}"></td>
+                    <td th:text="${uh.datumEingang}" ></td>
+                    <td th:text="${uh.datumErledigung}" ></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <br/>
+        
+        <div class="actions">
+
+            <div class="actions-left">
+
+                <a th:href="@{/kunden}" class="btn-secondary">Zurück zur Liste</a>
+
+            </div>  
+
+        </div>  
+
+    </body>
+</html>

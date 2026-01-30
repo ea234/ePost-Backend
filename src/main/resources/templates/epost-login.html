@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8"/>
+        <title>ePost</title>
+
+        <style>
+
+            body {
+                background: #2A7B9B;
+                background: linear-gradient(90deg,rgba(42, 123, 155, 1) 0%, rgba(87, 199, 133, 1) 15%, rgba(237, 221, 83, 1) 100%);
+                min-height: 100vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+        </style>
+    </head>
+    <body>
+
+        <div id="username-page">
+            <div class="username-form" style="background: white; padding: 40px; border-radius: 10px;">
+
+                <h2 class="mb-4">🚀Login ePost</h2>
+
+                <form th:action="@{/epost/login}" method="post"  id="usernameForm">
+                    
+<select name="userName" id="userName">
+  <option value="abrad">Alons Brader (abrad)</option>
+  <option value="cdean">Charlie Dean (cdean)</option>
+  <option value="ehart">Egon Hartling (ehart)</option>
+  <option value="gfulk">Gert Fulken (gfulk)</option>
+  <option value="sniss">Sabine Nissen (sniss)</option>
+  <option value="tmani">Tio Manik (tmani)</option>
+  <option value="ssona">Sam Sonait (ssona)</option>
+</select>
+<br/><br/>
+                    
+
+                    <input value="geheim" type="text" id="userPassword" name="userPassword" class="form-control mb-3" placeholder="Kennwort" required /><br/><br/>
+                    <br/>
+                    <button type="submit" class="btn btn-primary w-100">Login</button>
+                </form>
+            </div>
+        </div>
+
+    </body>
+</html>

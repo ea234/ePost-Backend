@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Vorgangs-Liste</title>
+        <link rel="stylesheet" th:href="@{/css/style.css}">
+    </head>
+    <body>
+        <h1>ePost - <span th:text="${ui_text_filter}">Vorg&auml;nge</span></h1>
+        <p style="color: #666; font-size: 12px;">
+            Version <span th:text="${appVersion}">1.0.0</span>
+        </p>    
+        <p style="color: #666; font-size: 12px;">
+            Angemeldet als <span th:text="${benutzer.userName}">benutzer</span> <span th:text="${benutzer.vorName}">vorname</span> 
+        </p>    
+        <div class="actions">
+
+            <div class="actions-left">
+                <a th:href="@{/epost/logout}"         class="btn-primary">Log Out</a>
+                <a th:href="@{/kunden}"               class="btn-primary">Kunden</a>
+                <a th:href="@{/vorgangstypen}"        class="btn-primary">UIDs</a>
+                &nbsp;&nbsp;
+                <a th:href="@{/vorgaenge/filter/all}" class="btn-filter">Alle Vorgaenge</a>
+                <a th:href="@{/vorgaenge/filter/my}"  class="btn-filter">Meine Vorgaenge</a>
+                &nbsp;
+                <a th:href="@{/vorgaenge/filter/start}" class="btn-filter">Start</a>
+                <a th:href="@{/vorgaenge/filter/bearb}" class="btn-filter">Bearbeitung</a>
+                <a th:href="@{/vorgaenge/filter/ende}"  class="btn-filter">Ende</a>
+            </div>  
+
+            <div class="actions-right">
+                <button id="btnRequestStartVerzeichnisPruefung" class="btn-workflow" >VZ Pruefung</button>
+                <button id="btnRequestStartBackgrounder"        class="btn-workflow" >Backgrounder</button>
+                <button id="btnRequestStartTestdokumente"       class="btn-workflow" >Test Dok</button>
+            </div>       
+
+        </div>
+
+        <div class="status-bar">
+
+            <div class="count" >
+                Anzahl Vorgaenge: <span th:text="${vorgaenge.size()}">0</span> von <span th:text="${vorgaenge_gesamt}">0</span>
+            </div>
+
+            <div class="message" id="vzMessage">
+                Keine Meldung
+            </div>
+
+        </div>
+
+        <div th:if="${#lists.isEmpty(vorgaenge)}" style="text-align: center; font-weight: bold; margin: 20px 0;">
+            Es wurden keine Vorgänge gefunden.
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Nummer</th>
+                    <th>Aktivitaet</th>
+                    <th>Status</th>
+                    <th>Bearbeiter</th>
+                    <th>Pagi Nr</th>
+                    <th>Vertragsnummer</th>
+                    <th>Typ</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="vorgang, iterStat : ${vorgaenge}"
+                    th:class="${iterStat.odd} ? 'odd-row' : 'even-row'"
+                    >
+                    <td th:text="${iterStat.count}">1</td> 
+                    <td th:text="${vorgang.wfAktivitaet}">Max</td>
+                    <td th:text="${vorgang.wfStatus}">Max</td>
+                    <td th:text="${vorgang.getBearbeiterUi()}">Max</td>
+
+                    <td> <a th:href="@{/api/dokument/paginr/{paginr}(paginr=${vorgang.paginierNr})}" target="_blank" > <span th:text="${vorgang.paginierNr}" >x</span> </a> </td>
+
+                    <td th:text="${vorgang.vertragNummer}">Max</td>
+
+                    <td><span th:text="${typMap[vorgang.vorgangTypNr]}">Typ Bezeichnung</span></td>
+
+
+
+                    <td>
+                        <a th:href="@{/vorgang/{id}(id=${vorgang.wfEPostID})}">Details</a>
+                    </td>        
+
+                </tr>
+            </tbody>
+        </table>
+        <div class="pagination">
+            <a th:if="${currentPage > 0}"  th:href="@{/vorgaenge(page=${currentPage - 1})}">Zurück</a>
+
+            <span>Seite <span th:text="${currentPage + 1}">1</span>  von <span th:text="${totalPages}">10</span></span>
+
+            <a th:if="${currentPage + 1 < totalPages}"  th:href="@{/vorgaenge(page=${currentPage + 1})}">Weiter</a>
+        </div>    
+
+        <script>
+
+            document.getElementById('btnRequestStartTestdokumente').addEventListener('click', function () {
+
+                doSendRequest('/api/wf/startTestdokumente');
+            });
+
+            document.getElementById('btnRequestStartBackgrounder').addEventListener('click', function () {
+
+                doSendRequest('/api/wf/startWfBackgrounder');
+            });
+
+
+            document.getElementById('btnRequestStartVerzeichnisPruefung').addEventListener('click', function () {
+
+                doSendRequest('/api/wf/startVzUeberwachung');
+            });
+
+            function doSendRequest(pUrl)
+            {
+                // Optional: Request-Optionen
+                const options = {
+                    method: 'GET' // oder 'POST', 'PUT', ...
+                            // headers: { 'Accept': 'application/json' },
+                            // body: JSON.stringify({ key: 'value' }) // nur bei POST/PUT etc.
+                };
+
+                fetch(pUrl)
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Netzwerk-Antwort war nicht ok: ' + response.status);
+                            }
+                            // Angenommen die API gibt JSON zurück
+                            return response.json();
+                        })
+                        .then(data => {
+
+                            const msg = data && data.message ? data.message : 'Verarbeitung abgeschlossen';
+
+                            document.getElementById('vzMessage').textContent = msg;
+                        })
+                        .catch(error => {
+                            document.getElementById('output').value = 'Fehler: ' + pUrl + '    ' + error.message;
+                        });
+            }
+
+        </script>
+    </body>
+</html>
