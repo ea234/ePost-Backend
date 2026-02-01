@@ -1034,9 +1034,6 @@ public class TestDokumentKunde {
     String id_text_baustein = null; // ID des zu verwendenden Textes aus den Properties
     String id_style = null; // ID des zu verwendenden Styles 
     String text_spalte_2 = null; // speichert den Ausgabestring der 2ten Spalte
-    String temp_parameter_1 = null; // speichert einen variablen Text fuer die Ersetzung im Druckbaustein 
-    String temp_parameter_2 = null;
-    String temp_parameter_3 = null;
 
     id_druck_zeile = "D1_DATEN_KUNDE";
     id_text_baustein = "TEXT_UEBERSCHRIFT_KUNDENDATEN";

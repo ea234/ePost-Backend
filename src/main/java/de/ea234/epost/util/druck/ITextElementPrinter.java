@@ -19,7 +19,7 @@ import org.openpdf.text.pdf.PdfPTable;
 import org.openpdf.text.pdf.PdfReader;
 import org.openpdf.text.pdf.PdfStamper;
 import org.openpdf.text.pdf.PdfWriter;
-// package de.ea234.system.itext.druck;
+
 class ITextElementPrinter
 {
   private static final Color                 FARBE_TEXT_FEST_DEFINIERTER_FONT = Color.BLACK;

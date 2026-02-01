@@ -43,6 +43,7 @@ public class VorgangsList implements ServiceListVorgaenge {
   public Vorgang setVorgangInBearbeitung( String pID, Benutzer pBenutzer )
   {
     Vorgang epost_vorgang = getVorgangByEPostId( pID );
+    
 
     epost_vorgang.setBearbeiter( pBenutzer.getUserName() );
 

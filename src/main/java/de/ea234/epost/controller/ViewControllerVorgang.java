@@ -96,7 +96,7 @@ public class ViewControllerVorgang {
     }
 
     String ui_text_filter = "";
-    
+
     /*
      * Vorgangsfilterung durchfuehren
      */
@@ -172,12 +172,8 @@ public class ViewControllerVorgang {
     model.addAttribute( "currentPage", page );
     model.addAttribute( "currentSize", size );
     model.addAttribute( "totalPages", (int) Math.ceil( list_vorgaenge.size() / (double) size ) );
-
-    
-    
 //    <p><span th:text="${typMap[vorgang.vorgangTypNr]}">Typ Bezeichnung</span></p>
-    
-    
+
     /*
      * View-Namen fuer die Vorgangsliste zurückgeben
      */
@@ -338,6 +334,8 @@ public class ViewControllerVorgang {
      */
     boolean can_close = (ist_aktivitaet_bearbeiten) && (ist_status_bearbeitung) && (ist_bearbeiter_gleich_benutzer);
 
+    can_claim = true;
+    can_close = true;
     model.addAttribute( "can_claim", can_claim );
     model.addAttribute( "can_close", can_close );
 
@@ -369,7 +367,59 @@ public class ViewControllerVorgang {
 
     model.addAttribute( "benutzer", aktiver_benutzer );
 
-    Vorgang bestehender_vorgang = serviceListVorgaenge.setVorgangInBearbeitung( id, aktiver_benutzer );
+    Vorgang bestehender_vorgang = serviceListVorgaenge.getVorgangByEPostId( id );
+
+    boolean ist_aktivitaet_bearbeiten = bestehender_vorgang.istAktivitaet( WorkflowAktivitaet.VORGANG_BEARBEITEN.toString() );
+
+    boolean ist_status_bearbeitung = bestehender_vorgang.istStatus( WorkflowStatus.IN_BEARBEITUNG.toString() );
+
+    boolean ist_status_beendet = bestehender_vorgang.istStatus( WorkflowStatus.ABGESCHLOSSEN.toString() );
+
+    boolean ist_bearbeiter_gleich_benutzer = bestehender_vorgang.istBearbeiter( aktiver_benutzer.getUserName() );
+
+    /*
+     * Ein Vorgang kann angenommen werden, wenn
+     * - der Vorgang in der Aktivitaet "Vorgang bearbeiten" ist
+     * - der Vorgang noch nicht im Status "in bearbeitung" ist
+     */
+    boolean can_claim = (ist_aktivitaet_bearbeiten) && ( ! ist_status_bearbeitung) && ( !ist_status_beendet ) ;
+
+    /*
+     * Ein Vorgang kann abgeschlossen werden, wenn
+     * - der Vorgang in der Aktivitaet "Vorgang bearbeiten" ist
+     * - der Vorgang noch im Status "in bearbeitung" ist
+     * - der aktive Benutzer der Bearbeiter ist.
+     */
+    boolean can_close = (ist_aktivitaet_bearbeiten) && (ist_status_bearbeitung) && (ist_bearbeiter_gleich_benutzer);
+
+    String error_message = "";
+
+    if ( can_claim )
+    {
+      bestehender_vorgang = serviceListVorgaenge.setVorgangInBearbeitung( id, aktiver_benutzer );
+    }
+    else
+    {
+      if ( ist_aktivitaet_bearbeiten == false )
+      {
+        error_message = "Fehler: Der Vorgang befindet sich nicht in der Aktivitaet \"Vorgang Bearbeiten\" ";
+      }
+      else if ( ist_status_bearbeitung )
+      {
+        error_message = "Fehler: Der Vorgang befindet sich bereits in Bearbeitung";
+      }
+      else if ( ist_status_beendet )
+      {
+        error_message = "Fehler: Der Vorgang ist bereits beendet";
+      }
+      else
+      {
+        error_message = "Der Vorgang kann nicht angenommen werden.";
+      }
+
+      model.addAttribute( "error_message", error_message );
+    }
+
 
     model.addAttribute( "vorgang", bestehender_vorgang );
 
@@ -380,6 +430,13 @@ public class ViewControllerVorgang {
     Adresse best_adresse = bestehender_kunde.getAddresse();
 
     model.addAttribute( "adresse", best_adresse );
+
+    model.addAttribute( "can_claim", can_claim );
+    model.addAttribute( "can_close", can_close );
+
+    model.addAttribute( "ist_aktivitaet_bearbeiten", ist_aktivitaet_bearbeiten );
+    model.addAttribute( "ist_status_bearbeitung", ist_status_bearbeitung );
+    model.addAttribute( "ist_bearbeiter_gleich_benutzer", ist_status_bearbeitung );
 
     return "vorgang-details";
   }
@@ -400,7 +457,58 @@ public class ViewControllerVorgang {
 
     model.addAttribute( "benutzer", aktiver_benutzer );
 
-    Vorgang bestehender_vorgang = serviceListVorgaenge.setVorgangBearbeitungAbgeschlossen( id, aktiver_benutzer );
+    Vorgang bestehender_vorgang = serviceListVorgaenge.getVorgangByEPostId( id );
+
+    boolean ist_aktivitaet_bearbeiten = bestehender_vorgang.istAktivitaet( WorkflowAktivitaet.VORGANG_BEARBEITEN.toString() );
+
+    boolean ist_status_bearbeitung = bestehender_vorgang.istStatus( WorkflowStatus.IN_BEARBEITUNG.toString() );
+
+    boolean ist_status_beendet = bestehender_vorgang.istStatus( WorkflowStatus.ABGESCHLOSSEN.toString() );
+
+    boolean ist_bearbeiter_gleich_benutzer = bestehender_vorgang.istBearbeiter( aktiver_benutzer.getUserName() );
+
+    /*
+     * Ein Vorgang kann angenommen werden, wenn
+     * - der Vorgang in der Aktivitaet "Vorgang bearbeiten" ist
+     * - der Vorgang noch nicht im Status "in bearbeitung" ist
+     */
+    boolean can_claim = (ist_aktivitaet_bearbeiten) && ( ! ist_status_bearbeitung) && ( !ist_status_beendet ) ;
+
+    /*
+     * Ein Vorgang kann abgeschlossen werden, wenn
+     * - der Vorgang in der Aktivitaet "Vorgang bearbeiten" ist
+     * - der Vorgang noch im Status "in bearbeitung" ist
+     * - der aktive Benutzer der Bearbeiter ist.
+     */
+    boolean can_close = (ist_aktivitaet_bearbeiten) && (ist_status_bearbeitung) && (ist_bearbeiter_gleich_benutzer);
+
+    String error_message = "";
+
+    if ( can_close )
+    {
+      bestehender_vorgang = serviceListVorgaenge.setVorgangBearbeitungAbgeschlossen( id, aktiver_benutzer );
+    }
+    else
+    {
+      if ( ist_status_bearbeitung == false )
+      {
+        error_message = "Fehler: Der Vorgang befindet sich nicht in Bearbeitung.";
+      }
+      else if ( ist_bearbeiter_gleich_benutzer == false )
+      {
+        error_message = "Fehler: Der Vorgang kann von Ihnen nicht beendet werden.";
+      }
+      else if ( ist_status_beendet )
+      {
+        error_message = "Fehler: Der Vorgang ist bereits beendet";
+      }
+      else
+      {
+        error_message = "Fehler: Der Vorgang kann nicht beendet werden.";
+      }
+
+      model.addAttribute( "error_message", error_message );
+    }
 
     model.addAttribute( "vorgang", bestehender_vorgang );
 

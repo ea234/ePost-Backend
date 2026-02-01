@@ -71,6 +71,10 @@
 
         </div>  
 
+<section th:if="${error_message}" class="detail-error-message">
+    <p th:text="${error_message}"></p>
+</section>
+
     </body>
 
 </html>
