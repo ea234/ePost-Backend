@@ -31,7 +31,7 @@ public class ViewControllerLogin {
    * ****************************************************************************
    */
   @GetMapping("/epost")
-  public String showAllVorgaenge( Model model )
+  public String showEPostLogIn( Model model )
   {
     return "epost-login";
   }
@@ -42,12 +42,12 @@ public class ViewControllerLogin {
    * ****************************************************************************
    */
   @PostMapping("/epost/login")
-  public String doUserLogIn( @RequestParam("userName") String userName, @RequestParam("userPassword") String userPassword, Model model, HttpSession pHttpSession, RequestContext recon )
+  public String doUserLogIn( @RequestParam("userName") String userName, @RequestParam("userPassword") String userPassword, Model model, HttpSession pHttpSession, RequestContext pRequestContext )
   {
     String pUserName = userName;
     String pUserPassword = userPassword;
 
-    log.info( " #### LOG #### ViewControllerLogin - " + recon.getRequestId() + " doUserLogin " + pUserName + "  " + pUserPassword );
+    log.info( " #### LOG #### ViewControllerLogin - " + pRequestContext.getRequestId() + " doUserLogin " + pUserName + "  " + pUserPassword );
 
     Benutzer best_benutzer = serviceListBenutzer.getBenutzerByUserName( pUserName );
 
@@ -56,7 +56,7 @@ public class ViewControllerLogin {
       // Fehler: user nicht gefunden
 
       log.info( "Benutzer nicht gefunden" );
-      
+
       model.addAttribute( "loginError", "Benutzer nicht gefunden" );
     }
     else
@@ -97,5 +97,4 @@ public class ViewControllerLogin {
 
     return "epost-login";
   }
-
 }

@@ -5,6 +5,9 @@
         <meta charset="UTF-8"/>
         <title>ePost</title>
 
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+
         <style>
 
             body {
@@ -21,24 +24,23 @@
     <body>
 
         <div id="username-page">
+            
             <div class="username-form" style="background: white; padding: 40px; border-radius: 10px;">
 
                 <h2 class="mb-4">🚀Login ePost</h2>
 
                 <form th:action="@{/epost/login}" method="post"  id="usernameForm">
-                    
+
+<label for="userName">Benutzer</label>&nbsp;&nbsp;                    
 <select name="userName" id="userName">
   <option value="abrad">Alons Brader (abrad)</option>
-  <option value="cdean">Charlie Dean (cdean)</option>
   <option value="ehart">Egon Hartling (ehart)</option>
   <option value="gfulk">Gert Fulken (gfulk)</option>
-  <option value="sniss">Sabine Nissen (sniss)</option>
-  <option value="tmani">Tio Manik (tmani)</option>
-  <option value="ssona">Sam Sonait (ssona)</option>
+  <option value="mhuan">Maria Huana (mhuan)</option>
 </select>
 <br/><br/>
                     
-
+<label for="userPassword">Kennwort</label>&nbsp;&nbsp;
                     <input value="geheim" type="text" id="userPassword" name="userPassword" class="form-control mb-3" placeholder="Kennwort" required /><br/><br/>
                     <br/>
                     <button type="submit" class="btn btn-primary w-100">Login</button>

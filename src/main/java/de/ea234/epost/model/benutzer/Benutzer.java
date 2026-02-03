@@ -11,13 +11,7 @@ import lombok.Setter;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
-import java.security.spec.InvalidKeySpecException;
-import java.security.spec.KeySpec;
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.PBEKeySpec;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 
 @Entity
 @Table(name = "benutzer")
@@ -55,30 +49,30 @@ public class Benutzer {
   @Email(message = "Email muss gültig sein")
   @Column(unique = true, length = 255)
   private String email;
-  
+
   public boolean istUserName( String pUserName )
   {
     return userName.equals( pUserName );
   }
-  
-  public void setUserPassword( String pPassword ) 
+
+  public void setUserPassword( String pPassword )
   {
     SecureRandom random = new SecureRandom();
-    
+
     byte[] userHashSalt1 = new byte[16];
-    
+
     random.nextBytes( userHashSalt1 );
-    
+
     userHashSalt = userHashSalt1.toString();
-    
+
     userHashPassword = pPassword;
   }
-  
+
   public boolean checkPassword( String pPassword )
   {
-    return userName.equals( pPassword ) || "geheim".equals( pPassword); // ersteinmal dass hier
+    return userName.equals( pPassword ) || "geheim".equals( pPassword ); // ersteinmal dass hier
   }
-  
+
 //  
 //  public String getHashValue( String pSalt, String pPassword )
 //  {
@@ -116,5 +110,4 @@ public class Benutzer {
 //  
 //  
 //  }
-  
 }

@@ -9,8 +9,6 @@ import de.ea234.epost.util.FkHtml;
 import java.util.Properties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.event.EventListener;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,6 +39,11 @@ public class RestControllerWorkflow {
     testDokumentErsteller = pTestDokumentErsteller;
   }
 
+  /*
+   * ****************************************************************************
+   * PING
+   * ****************************************************************************
+   */
   @GetMapping(path = "/ping", produces = MediaType.TEXT_PLAIN_VALUE)
   public String ping()
   {
@@ -51,6 +54,11 @@ public class RestControllerWorkflow {
     return "RestControllerVorgang " + System.currentTimeMillis();
   }
 
+  /*
+   * ****************************************************************************
+   * Mappings um fuer jeden Kunden einen Testeingang zu erstellen
+   * ****************************************************************************
+   */
   @GetMapping(path = "/startTestdokumente", produces = MediaType.APPLICATION_JSON_VALUE)
   public String startErstelleTestdokumente()
   {
@@ -70,6 +78,11 @@ public class RestControllerWorkflow {
     return FkHtml.getStringJson( prop_json );
   }
 
+  /*
+   * ****************************************************************************
+   * Mapping um die Verzeichnisueberwachung manuell starten zu koennen
+   * ****************************************************************************
+   */
   @GetMapping(path = "/startVzUeberwachung", produces = MediaType.APPLICATION_JSON_VALUE)
   public String startVerzeichnisUeberwachung()
   {
@@ -77,7 +90,7 @@ public class RestControllerWorkflow {
 
     log.info( "RestControllerVorgang startVerzeichnisUeberwachung " + FkDatum.getWochentagDatumUndZeit() );
 
-    verzeichnisUeberwacher.checkInputDir();
+    verzeichnisUeberwacher.run();
 
     Properties prop_json = new Properties();
 
@@ -89,6 +102,11 @@ public class RestControllerWorkflow {
     return FkHtml.getStringJson( prop_json );
   }
 
+  /*
+   * ****************************************************************************
+   * Mapping um den Background-Agenten manuell starten zu koennen
+   * ****************************************************************************
+   */
   @GetMapping(path = "/startWfBackgrounder", produces = MediaType.APPLICATION_JSON_VALUE)
   public String startWfBackgrounder()
   {

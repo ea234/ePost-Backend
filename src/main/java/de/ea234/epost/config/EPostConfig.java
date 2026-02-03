@@ -23,6 +23,7 @@ public class EPostConfig {
   private String name;
   private String version;
   private String verzeichnis;
+  private String test_fehler_claim;
 
   private String verzeichnis_input;
   private String verzeichnis_root;
@@ -33,6 +34,11 @@ public class EPostConfig {
   private Path pathVerzeichnisInput = null;
   private Path pathVerzeichnisRoot = null;
   private Path pathTagesverzeichnis = null;
+
+  public boolean istTestVorgangClaimFehlermeldungen()
+  {
+    return test_fehler_claim.equalsIgnoreCase( "true" );
+  }
 
   public Path getPathToInput( String pDateiName )
   {
@@ -104,5 +110,4 @@ public class EPostConfig {
       log.info( "Fehler ist " + exp.getLocalizedMessage() );
     }
   }
-
 }

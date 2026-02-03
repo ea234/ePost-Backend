@@ -21,6 +21,7 @@ public class VorgangXml {
    * Diese Klasse kennt nur die Vorgangstyp-Nummer (=UID), aber nicht deren Bezeichnung.
    * 
    * Diese Klasse wird nicht in die Datenbank geschrieben. 
+   * Aus diesen Daten wird eine XML-Dataei fuer den Eingang geschrieben.
    * Aus diesen Daten wird der eigentliche Vorgang, welcher dann in die DB geschrieben wird.
    */
   public VorgangXml()

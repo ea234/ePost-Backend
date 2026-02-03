@@ -885,6 +885,12 @@ public class TestDokumentKunde {
   private static String TEXT_VERTRAGNUMMER = "Vertragnummer";
   private static String TEXT_VORGANGTYPNR = "Vorgangtypnr";
 
+  private static String TEXT_DATUM_ERSTELLLT = "Datum erstellt";
+  
+  private static String TEXT_UEBERSCHRIFT_KUNDENDATEN = "Kundendaten";
+
+  private static String TEXT_UEBERSCHRIFT_VORGANGSDATEN = "Vorgangsdaten";
+
   /**
    * Eine Konstante von BigDecimal mit "0" als Wert ( ohne definierte
    * Nachkommastellen )
@@ -915,6 +921,7 @@ public class TestDokumentKunde {
       m_prop_texte.setProperty( "TEXT_STAMMNR", TEXT_STAMMNR );
       m_prop_texte.setProperty( "TEXT_VERTRAGNUMMER", TEXT_VERTRAGNUMMER );
       m_prop_texte.setProperty( "TEXT_VORGANGTYPNR", TEXT_VORGANGTYPNR );
+      m_prop_texte.setProperty( "TEXT_DATUM_ERSTELLLT", TEXT_DATUM_ERSTELLLT );
 
       m_prop_texte.setProperty( "TEXT_UEBERSCHRIFT_VORGANGSDATEN", TEXT_UEBERSCHRIFT_VORGANGSDATEN );
       m_prop_texte.setProperty( "TEXT_UEBERSCHRIFT_KUNDENDATEN", TEXT_UEBERSCHRIFT_KUNDENDATEN );
@@ -923,9 +930,6 @@ public class TestDokumentKunde {
     return m_prop_texte;
   }
 
-  private static String TEXT_UEBERSCHRIFT_KUNDENDATEN = "Kundendaten";
-
-  private static String TEXT_UEBERSCHRIFT_VORGANGSDATEN = "Vorgangsdaten";
 
   private void getBausteinKunde( Kunde pKunde )
   {
@@ -1014,7 +1018,9 @@ public class TestDokumentKunde {
     addElementStyle( id_druck_zeile, id_text_baustein, id_style, text_spalte_2 );
 
     //--------------------------------------------------------------------------------
-    String text = "\n\n" + ("Test Freitext für Kunde " + pKunde.getVorUndNachname() + ".\n").repeat( 10 );
+    id_druck_zeile = "D1_DATEN_FREITEXT";
+
+    String text = "\n\n" + ("Test Freitext für Kunde " + pKunde.getVorUndNachname() + ".\n").repeat( 5 );
 
     addElementStyleText( id_druck_zeile, text, id_style, null );
   }
@@ -1035,14 +1041,14 @@ public class TestDokumentKunde {
     String id_style = null; // ID des zu verwendenden Styles 
     String text_spalte_2 = null; // speichert den Ausgabestring der 2ten Spalte
 
-    id_druck_zeile = "D1_DATEN_KUNDE";
-    id_text_baustein = "TEXT_UEBERSCHRIFT_KUNDENDATEN";
+    id_druck_zeile = "D2_DATEN_VORGANG";
+    id_text_baustein = "TEXT_UEBERSCHRIFT_VORGANGSDATEN";
     text_spalte_2 = null;
 
     addStyle( id_druck_zeile, id_text_baustein, CSS_BAUSTEINUEBERSCHRIFT, text_spalte_2 );
 
     //--------------------------------------------------------------------------------
-    id_druck_zeile = "D1_DATEN_PAGINIERNR";
+    id_druck_zeile = "D2_DATEN_PAGINIERNR";
     id_text_baustein = "TEXT_PAGINIERNR";
     id_style = "css_normal";
     text_spalte_2 = pVorgang.getPaginierNr();
@@ -1050,7 +1056,7 @@ public class TestDokumentKunde {
     addElementStyle( id_druck_zeile, id_text_baustein, id_style, text_spalte_2 );
 
     //--------------------------------------------------------------------------------
-    id_druck_zeile = "D1_DATEN_DATUMEINGANG";
+    id_druck_zeile = "D2_DATEN_DATUMEINGANG";
     id_text_baustein = "TEXT_DATUMEINGANG";
     id_style = "css_normal";
     text_spalte_2 = FkDatum.getString( pVorgang.getDatumEingang() );
@@ -1058,7 +1064,7 @@ public class TestDokumentKunde {
     addElementStyle( id_druck_zeile, id_text_baustein, id_style, text_spalte_2 );
 
     //--------------------------------------------------------------------------------
-    id_druck_zeile = "D1_DATEN_STAMMNR";
+    id_druck_zeile = "D2_DATEN_STAMMNR";
     id_text_baustein = "TEXT_STAMMNR";
     id_style = "css_normal";
     text_spalte_2 = pVorgang.getStammNr();
@@ -1066,7 +1072,7 @@ public class TestDokumentKunde {
     addElementStyle( id_druck_zeile, id_text_baustein, id_style, text_spalte_2 );
 
     //--------------------------------------------------------------------------------
-    id_druck_zeile = "D1_DATEN_VERTRAGNUMMER";
+    id_druck_zeile = "D2_DATEN_VERTRAGNUMMER";
     id_text_baustein = "TEXT_VERTRAGNUMMER";
     id_style = "css_normal";
     text_spalte_2 = pVorgang.getVertragNummer();
@@ -1074,10 +1080,25 @@ public class TestDokumentKunde {
     addElementStyle( id_druck_zeile, id_text_baustein, id_style, text_spalte_2 );
 
     //--------------------------------------------------------------------------------
-    id_druck_zeile = "D1_DATEN_VORGANGTYPNR";
+    id_druck_zeile = "D2_DATEN_VORGANGTYPNR";
     id_text_baustein = "TEXT_VORGANGTYPNR";
     id_style = "css_normal";
     text_spalte_2 = pVorgang.getVorgangTypNr();
+
+    addElementStyle( id_druck_zeile, id_text_baustein, id_style, text_spalte_2 );
+    
+    
+    id_druck_zeile = "D2_LEERZEILE";
+    
+    String text = "\n";
+
+    addElementStyleText( id_druck_zeile, text, id_style, null );
+
+    //--------------------------------------------------------------------------------
+    id_druck_zeile = "D2_DATUM_ERSTELLLT";
+    id_text_baustein = "TEXT_DATUM_ERSTELLLT";
+    id_style = "css_normal";
+    text_spalte_2 = FkDatum.getWochentagDatumUndZeit();
 
     addElementStyle( id_druck_zeile, id_text_baustein, id_style, text_spalte_2 );
   }

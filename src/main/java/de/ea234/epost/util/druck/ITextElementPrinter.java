@@ -26,7 +26,7 @@ class ITextElementPrinter
 
   private static final Color                 FARBE_TEXT_FEST_CSS_VORGABE_FONT = Color.BLACK;
 
-  private static final Color                 FARBE_LINIE_GRAU_35_PROZENT      = new Color( 166, 166, 166 );
+  private static final Color                 FARBE_LINIE_GRAU_35_PROZENT      = new Color( 50, 50, 50 );
 
   private static final Color                 FARBE_LINIE_FUSSZEILE            = new Color( 0.35f, 0.35f, 0.35f );
 
@@ -519,10 +519,10 @@ class ITextElementPrinter
 
     if ( knz_mit_umrandung )
     {
-      pdf_cell.setBorder( ITextStyle.RECTANGLE_BORDER_TOP | ITextStyle.RECTANGLE_BORDER_BOTTOM );
+      pdf_cell.setBorder( ITextStyle.RECTANGLE_BORDER_BOTTOM );
       pdf_cell.setBorderColor( FARBE_LINIE_GRAU_35_PROZENT );
-      pdf_cell.setBorderWidthTop( 1.5f );
-      pdf_cell.setBorderWidthBottom( 0.75f );
+     //pdf_cell.setBorderWidthTop( 1.5f );
+      pdf_cell.setBorderWidthBottom( 1.00f );
     }
     else
     {

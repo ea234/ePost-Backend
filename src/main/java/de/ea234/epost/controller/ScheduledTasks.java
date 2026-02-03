@@ -15,6 +15,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class ScheduledTasks {
 
+  /*
+   * ****************************************************************************
+   * Klasse fuer die zeitgesteuerten Aufgaben 
+   * - Start der Verzeichnisueberwachung auf neue Eingaenge
+   * - Start des Background-Agentens
+   * ****************************************************************************
+   */
+
   private static final Logger log = LoggerFactory.getLogger( ScheduledTasks.class );
 
   private ScheduledExecutorService m_scheduled_executor_service = null;

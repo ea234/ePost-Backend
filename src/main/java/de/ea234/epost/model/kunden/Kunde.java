@@ -69,7 +69,7 @@ public class Kunde {
   {
     return vorName + " " + nachName;
   }
-    
+
   @OneToMany(
     mappedBy = "kunde",
     cascade = CascadeType.ALL,

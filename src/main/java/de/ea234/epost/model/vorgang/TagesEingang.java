@@ -35,9 +35,4 @@ public class TagesEingang {
   {
     return tagesDatum.longValue() == pDatum;
   }
-
-  public long getAnzahlEingaengeL()
-  {
-    return anzahleingaenge.longValue();
-  }
 }

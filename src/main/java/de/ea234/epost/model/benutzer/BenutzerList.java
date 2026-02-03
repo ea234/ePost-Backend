@@ -46,7 +46,6 @@ public class BenutzerList implements ServiceListBenutzer {
     return getList().get( pIndex );
   }
 
-  @Override
   public Benutzer getBenutzerByUserName( String pUserName )
   {
     return this.getList().stream().filter( p -> p.istUserName( pUserName ) ).findFirst().orElse( null );
@@ -62,18 +61,16 @@ public class BenutzerList implements ServiceListBenutzer {
     System.out.println( "🔴 doTestdaten Kunde" );
 
     addIniBenutzer( "abrad", "Alons", "Brader" );
-    addIniBenutzer( "cdean", "Charlie", "Dean" );
     addIniBenutzer( "ehart", "Egon", "Hartling" );
-    addIniBenutzer( "gfulk", "Gert", "Fulken" );
     addIniBenutzer( "sniss", "Sabine", "Nissen" );
     addIniBenutzer( "mhuan", "Maria", "Huana" );
   }
 
   private void addIniBenutzer( String pUserName, String pVorname, String pNachname )
   {
-    Benutzer b_benutzer = getBenutzerByUserName( pUserName );
+    Benutzer bestehender_benutzer = getBenutzerByUserName( pUserName );
 
-    if ( b_benutzer == null )
+    if ( bestehender_benutzer == null )
     {
       Benutzer neuer_benutzer = new Benutzer();
 

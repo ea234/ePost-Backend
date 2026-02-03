@@ -56,7 +56,7 @@ public class VerzeichnisUeberwacher implements Runnable {
 
     this.dokumentRepository = pDokumentRepository;
   }
-  
+
   @Override
   public void run()
   {
@@ -65,7 +65,7 @@ public class VerzeichnisUeberwacher implements Runnable {
     checkInputDir();
   }
 
-  public boolean checkInputDir()
+  private boolean checkInputDir()
   {
     if ( m_knz_verz_ueberwachung_laeuft )
     {
@@ -163,9 +163,9 @@ public class VerzeichnisUeberwacher implements Runnable {
 
             knz_parse_xml_ok = true;
           }
-          catch (IOException ex)
+          catch (IOException err_inst)
           {
-            log.error( "Fehler beim parsen der XMl-Datei  ", ex );
+            log.error( "Fehler beim parsen der XMl-Datei ", err_inst );
 
             knz_verarbeitung_ok = false;
           }
@@ -207,9 +207,9 @@ public class VerzeichnisUeberwacher implements Runnable {
           {
             bytes = in.readAllBytes();
           }
-          catch (IOException exp)
+          catch (IOException err_inst)
           {
-            log.error( "Fehler beim lesen der PDF-Datei ", exp );
+            log.error( "Fehler beim lesen der PDF-Datei ", err_inst );
 
             knz_verarbeitung_ok = false;
           }
@@ -275,19 +275,17 @@ public class VerzeichnisUeberwacher implements Runnable {
       Files.move( pPathSource, pPathDestination, StandardCopyOption.ATOMIC_MOVE );
 
       knz_move_ok = true;
-
-      //System.out.println( "File moved atomically." );
     }
-    catch (IOException e)
+    catch (IOException err_inst)
     {
-      System.err.println( "Atomic move failed: " + e.getMessage() );
+      log.error( "Fehler: Atomic move failed: ", err_inst );
     }
 
     return knz_move_ok;
   }
 
   @Transactional
-  public boolean speichereDokUndVorgang( Dokument new_dok, Vorgang new_vorgang )
+  private boolean speichereDokUndVorgang( Dokument new_dok, Vorgang new_vorgang )
   {
     boolean knz_db_ok = false;
 
@@ -301,9 +299,9 @@ public class VerzeichnisUeberwacher implements Runnable {
 
         knz_db_ok = true;
       }
-      catch (Exception exp)
+      catch (Exception err_inst)
       {
-        log.error( "Fehler beim Speichern in die Datenbank " );
+        log.error( "Fehler beim Speichern in die Datenbank ", err_inst );
       }
 
     }
@@ -322,9 +320,9 @@ public class VerzeichnisUeberwacher implements Runnable {
         .filter( f -> f.endsWith( "rdy" ) )
         .collect( Collectors.toList() );
     }
-    catch (IOException exp)
+    catch (IOException err_inst)
     {
-      log.error( "IOException ", exp );
+      log.error( "Verzeichnisueberwacher IOException ", err_inst );
     }
 
     return result;
@@ -334,5 +332,4 @@ public class VerzeichnisUeberwacher implements Runnable {
   {
     log.info( pString );
   }
-
 }

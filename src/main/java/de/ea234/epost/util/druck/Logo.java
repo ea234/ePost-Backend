@@ -1,12 +1,90 @@
 package de.ea234.epost.util.druck;
 
 import java.awt.Image;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Base64;
 
 import javax.swing.ImageIcon;
 
-class Logo
-{
+class Logo {
+
+  private static final String DATEI_NAME = "/mnt/hd4tbb/jpg1.jpg";
+
+  private static byte[] m_datei_bytes = null;
+
+  private static Image m_image = null;
+
+  public static void main( String[] args )
+  {
+    try
+    {
+      erstelleDatei();
+    }
+    catch (Exception err_inst)
+    {
+      System.out.println( "Fehler: errSchreibeDatei 1 " + err_inst.getMessage() );
+    }
+
+    System.exit( 0 );
+  }
+
+  public static void erstelleDatei()
+  {
+    //  schreibeDatei( DATEI_NAME, getImage() );
+  }
+
+  /**
+   * Erstellt die Datei und schreibt den uebergebenen Inhalt rein. Ist der
+   * uebergebene Inhalt null wird eine leere Datei erstellt.
+   *
+   * @param pDateiName der Dateiname
+   * @param pDateiInhalt der zu schreibende Inhalt
+   * @return TRUE wenn die Datei geschrieben werden konnte, sonst False
+   */
+  private static boolean schreibeDatei( String pDateiName, byte[] pDateiInhalt )
+  {
+    boolean knz_ergebnis = false;
+
+    OutputStream file_output_stream = null;
+
+    try
+    {
+      file_output_stream = new FileOutputStream( pDateiName );
+
+      if ( pDateiInhalt != null )
+      {
+        file_output_stream.write( pDateiInhalt );
+      }
+
+      file_output_stream.flush();
+
+      knz_ergebnis = true;
+    }
+    catch (Exception err_inst)
+    {
+      System.out.println( "Fehler: errSchreibeDatei 1 " + err_inst.getMessage() );
+    }
+    finally
+    {
+      try
+      {
+        file_output_stream.close();
+      }
+      catch (IOException err_inst)
+      {
+        knz_ergebnis = false;
+
+        System.out.println( "Fehler: errSchreibeDatei 1 " + err_inst.getMessage() );
+      }
+    }
+
+    file_output_stream = null;
+
+    return knz_ergebnis;
+  }
+
   public static Image getImage()
   {
     StringBuffer buffer_base64 = new StringBuffer();
@@ -126,7 +204,7 @@ class Logo
 
       return new ImageIcon( bytes ).getImage();
     }
-    catch ( Exception err_inst )
+    catch (Exception err_inst)
     {
       System.out.println( err_inst.getMessage() );
 

@@ -50,20 +50,18 @@ public class DokumentList implements ServiceListDokument {
     getList().add( pDokument );
   }
 
-  @Override
   public Dokument getIndex( int pIndex )
   {
     return getList().get( pIndex );
   }
 
-  @Override
   public Dokument getDokumentByPaginierNr( String pPaginierNr )
   {
     if ( FkPaginiernummer.istPaginiernummer( pPaginierNr ) )
     {
       return dokumentRepository.findByPaginierNr( pPaginierNr );
     }
-    
+
     return null;
   }
 }

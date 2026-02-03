@@ -59,6 +59,11 @@ public class KundeList implements ServiceListKunde {
     String csv_kunde_basisdaten = "";
   }
 
+  /*
+   * ****************************************************************************
+   * Erstellung von Testkunden
+   * ****************************************************************************
+   */
   public void init()
   {
     doTestDaten();
@@ -70,6 +75,7 @@ public class KundeList implements ServiceListKunde {
     Adresse adresse_02 = getNewAdresse( "Bogenstr. 526", "Schön Alanberg", "09143", "DE" );
     Adresse adresse_03 = getNewAdresse( "Brandenburger Str. 86b", "Leipoldscheid", "96731", "DE" );
     Adresse adresse_04 = getNewAdresse( "Feldsiefer Wiesen 39", "Vogelgsangscheid", "21139", "DE" );
+
     Adresse adresse_05 = getNewAdresse( "Ginsterweg 42c", "Ost Enya", "63226", "DE" );
     Adresse adresse_06 = getNewAdresse( "Elisabeth-von-Thadden-Str. 40b", "Schimastadt", "31852", "DE" );
     Adresse adresse_07 = getNewAdresse( "Friedrich-Ebert-Platz 38b", "Neu Riekegrün", "05156", "DE" );
@@ -99,12 +105,13 @@ public class KundeList implements ServiceListKunde {
     Adresse adresse_29 = getNewAdresse( "Friedrich-Bergius-Platz 74c", "Klein Natalia", "63945", "DE" );
     Adresse adresse_30 = getNewAdresse( "Gronenborner Weg 6", "Reitzeburg", "62258", "DE" );
 
-    addIniKunde( "115591", "Herr", "Steve", "Meisch", ("1959-05-19"), "+49-172-7120873", adresse_01 );
-    addIniKunde( "124682", "Frau", "Kimberley", "Bienias", ("1981-02-03"), "+49-176-9317664", adresse_02 );
-    addIniKunde( "133773", "Frau", "Annemarie", "Werpas", ("1986-01-10"), "+49-174-5737792", adresse_03 );
-    addIniKunde( "151955", "Herr", "Willi", "Bertenbreiter", ("1984-12-09"), "+49-168-8577760", adresse_05 );
+    addIniKunde( "115591", "Herr", "Alexander", "Meisch", "1959-05-19", "+49-172-7120873", adresse_01 );
+    addIniKunde( "133773", "Frau", "Annemarie", "Werpas", "1986-01-10", "+49-174-5737792", adresse_02 );
 
-//    addIniKunde( "142864", "Frau", "Chayenne", "Sinnhuber", ("1973-06-29"), "+49-175-9803840", adresse_04 );
+    addIniKunde( "170009", "Frau", "Henriette", "Neuendorf", "1981-11-02", "+49-166-5753224", adresse_03 );
+    addIniKunde( "151955", "Herr", "Willi", "Bertenbreiter", "1944-06-09", "+49-168-8577760", adresse_04 );
+
+//    addIniKunde( "142864", "Frau", "Chayenne", "Sinnhuber", ("1973-06-29"), "+49-175-9803840", adresse_05 );
 //    addIniKunde( "160046", "Frau", "Bianca", "Kampf", ("1959-06-30"), "+49-161-2833174", adresse_06 );
 //    addIniKunde( "179137", "Frau", "Noemi", "Hanenberger", ("1986-04-25"), "+49-1509-6450986", adresse_07 );
 //    addIniKunde( "188208", "Frau", "Pia", "Büngener", ("1997-09-19"), "+49-1518-9709669", adresse_08 );
@@ -115,7 +122,7 @@ public class KundeList implements ServiceListKunde {
 //    addIniKunde( "133713", "Herr", "Jay", "Dittmar", ("1987-03-28"), "+49-161-5854588", adresse_13 );
 //    addIniKunde( "142774", "Herr", "Eduart", "Poeschl", ("1995-02-06"), "+49-178-0597505", adresse_14 );
 //    addIniKunde( "151895", "Herr", "Pepe", "Hesse", ("1976-07-09"), "+49-170-3003488", adresse_15 );
-//    addIniKunde( "170000", "Frau", "Anna", "Schellenbeck", "1993-04-20", "+49-172-7945942", adresse_16 );
+//    addIniKunde( "124682", "Frau", "Kimberley", "Bienias", ("1981-02-03"), "+49-176-9317664", adresse_16 );
 //    addIniKunde( "170001", "Herr", "Till", "Felke", "1975-04-13", "+49-1579-2422598", adresse_17 );
 //    addIniKunde( "170002", "Herr", "Aliyah", "Lenzen", "1999-07-14", "+49-1546-9823332", adresse_18 );
 //    addIniKunde( "170003", "Frau", "Miriam", "Battke", "1970-11-04", "+49-171-6315295", adresse_19 );
@@ -124,7 +131,7 @@ public class KundeList implements ServiceListKunde {
 //    addIniKunde( "170006", "Herr", "Asya", "Lepthin", "1973-06-27", "+49-166-8109497", adresse_22 );
 //    addIniKunde( "170007", "Herr", "Hennes", "Urbansky", "1969-12-10", "+49-167-3348512", adresse_23 );
 //    addIniKunde( "170008", "Herr", "Yves", "Lipus", "1988-08-26", "+49-1506-3433799", adresse_24 );
-//    addIniKunde( "170009", "Herr", "Henriette", "Neuendorf", "1981-11-02", "+49-166-5753224", adresse_25 );
+//    addIniKunde( "170000", "Frau", "Anna", "Schellenbeck", "1993-04-20", "+49-172-7945942", adresse_25 );  
 //    addIniKunde( "1700010", "Herr", "Luisa", "Wölpert", "2000-01-31", "+49-1574-3426375", adresse_26 );
 //    addIniKunde( "1700011", "Herr", "Leni", "Schwarzer", "1981-04-20", "+49-160-7285866", adresse_27 );
 //    addIniKunde( "1700012", "Herr", "Jannis", "Matthes", "1998-01-13", "+49-163-1161467", adresse_28 );
@@ -149,9 +156,7 @@ public class KundeList implements ServiceListKunde {
     {
       log.info( "Kunde noch nicht vorhanden. " + stammNr + ", " + vorName );
 
-      String kunde_email = vorName + "." + nachName + "@web.de";
-
-      Kunde new_kunde = getNewKunde( stammNr, anrede, vorName, nachName, kunde_email, geburtsDatum, telefon, adresse );
+      Kunde new_kunde = getNewKunde( stammNr, anrede, vorName, nachName, geburtsDatum, telefon, adresse );
 
       addVertrag( new_kunde );
 
@@ -161,7 +166,7 @@ public class KundeList implements ServiceListKunde {
     }
   }
 
-  private Kunde getNewKunde( String stammNr, String anrede, String vorName, String nachName, String email, String geburtsDatum, String telefon, Adresse adresse )
+  private Kunde getNewKunde( String stammNr, String anrede, String vorName, String nachName, String geburtsDatum, String telefon, Adresse adresse )
   {
     Kunde new_kunde = new Kunde();
 
@@ -169,7 +174,10 @@ public class KundeList implements ServiceListKunde {
     new_kunde.setAnrede( anrede );
     new_kunde.setVorName( vorName );
     new_kunde.setNachName( nachName );
-    new_kunde.setEmail( email );
+
+    String kunde_email = vorName + "." + nachName + "@web.de";
+
+    new_kunde.setEmail( kunde_email );
     new_kunde.setGeburtsDatum( FkDatumLong.parseToDate( geburtsDatum ) );
     new_kunde.setTelefon( telefon );
     new_kunde.setAddresse( adresse );
@@ -216,7 +224,6 @@ public class KundeList implements ServiceListKunde {
 
     return v2;
   }
-
 
   /*
    * ****************************************************************************

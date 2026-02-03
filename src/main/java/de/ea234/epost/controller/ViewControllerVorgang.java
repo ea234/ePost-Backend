@@ -334,14 +334,21 @@ public class ViewControllerVorgang {
      */
     boolean can_close = (ist_aktivitaet_bearbeiten) && (ist_status_bearbeitung) && (ist_bearbeiter_gleich_benutzer);
 
-    can_claim = true;
-    can_close = true;
+    if ( ePostConfig.istTestVorgangClaimFehlermeldungen() )
+    {
+      can_claim = true;
+      can_close = true;
+    }
+
     model.addAttribute( "can_claim", can_claim );
     model.addAttribute( "can_close", can_close );
 
     model.addAttribute( "ist_aktivitaet_bearbeiten", ist_aktivitaet_bearbeiten );
     model.addAttribute( "ist_status_bearbeitung", ist_status_bearbeitung );
     model.addAttribute( "ist_bearbeiter_gleich_benutzer", ist_status_bearbeitung );
+    
+    model.addAttribute( "typMap", serviceListVorgangstypen.getMapUidZuBezeichnung() );
+
 
     return "vorgang-details";
   }
@@ -382,7 +389,7 @@ public class ViewControllerVorgang {
      * - der Vorgang in der Aktivitaet "Vorgang bearbeiten" ist
      * - der Vorgang noch nicht im Status "in bearbeitung" ist
      */
-    boolean can_claim = (ist_aktivitaet_bearbeiten) && ( ! ist_status_bearbeitung) && ( !ist_status_beendet ) ;
+    boolean can_claim = (ist_aktivitaet_bearbeiten) && ( ! ist_status_bearbeitung) && ( ! ist_status_beendet);
 
     /*
      * Ein Vorgang kann abgeschlossen werden, wenn
@@ -420,7 +427,6 @@ public class ViewControllerVorgang {
       model.addAttribute( "error_message", error_message );
     }
 
-
     model.addAttribute( "vorgang", bestehender_vorgang );
 
     Kunde bestehender_kunde = serviceListKunde.getKundeByStammnummer( bestehender_vorgang.getStammNr() );
@@ -438,6 +444,8 @@ public class ViewControllerVorgang {
     model.addAttribute( "ist_status_bearbeitung", ist_status_bearbeitung );
     model.addAttribute( "ist_bearbeiter_gleich_benutzer", ist_status_bearbeitung );
 
+    model.addAttribute( "typMap", serviceListVorgangstypen.getMapUidZuBezeichnung() );
+    
     return "vorgang-details";
   }
 
@@ -472,7 +480,7 @@ public class ViewControllerVorgang {
      * - der Vorgang in der Aktivitaet "Vorgang bearbeiten" ist
      * - der Vorgang noch nicht im Status "in bearbeitung" ist
      */
-    boolean can_claim = (ist_aktivitaet_bearbeiten) && ( ! ist_status_bearbeitung) && ( !ist_status_beendet ) ;
+    boolean can_claim = (ist_aktivitaet_bearbeiten) && ( ! ist_status_bearbeitung) && ( ! ist_status_beendet);
 
     /*
      * Ein Vorgang kann abgeschlossen werden, wenn
@@ -490,17 +498,17 @@ public class ViewControllerVorgang {
     }
     else
     {
-      if ( ist_status_bearbeitung == false )
+      if ( ist_status_beendet )
+      {
+        error_message = "Fehler: Der Vorgang ist bereits beendet";
+      }
+      else if ( ist_status_bearbeitung == false )
       {
         error_message = "Fehler: Der Vorgang befindet sich nicht in Bearbeitung.";
       }
       else if ( ist_bearbeiter_gleich_benutzer == false )
       {
         error_message = "Fehler: Der Vorgang kann von Ihnen nicht beendet werden.";
-      }
-      else if ( ist_status_beendet )
-      {
-        error_message = "Fehler: Der Vorgang ist bereits beendet";
       }
       else
       {
@@ -519,6 +527,9 @@ public class ViewControllerVorgang {
     Adresse best_adresse = bestehender_kunde.getAddresse();
 
     model.addAttribute( "adresse", best_adresse );
+
+    model.addAttribute( "typMap", serviceListVorgangstypen.getMapUidZuBezeichnung() );
+    
 
     return "vorgang-details";
   }
