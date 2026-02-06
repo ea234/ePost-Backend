@@ -46,7 +46,7 @@ public class ViewControllerLoginTest {
 
     Assertions.assertEquals( "epost-login", view, "Expected to stay on login page when user not found" );
 
-    Mockito.verify( mockModel ).addAttribute( Mockito.eq( "loginError" ), Mockito.eq( "Benutzer nicht gefunden" ) );
+    Mockito.verify( mockModel ).addAttribute( Mockito.eq( "error_message" ), Mockito.eq( "Benutzer nicht gefunden" ) );
   }
 
   @Test
@@ -66,7 +66,7 @@ public class ViewControllerLoginTest {
 
     Assertions.assertEquals( "epost-login", view, "Expected to stay on login page when password wrong" );
 
-    Mockito.verify( mockModel ).addAttribute( Mockito.eq( "loginError" ), Mockito.eq( "Kennwort stimmt nicht" ) );
+    Mockito.verify( mockModel ).addAttribute( Mockito.eq( "error_message" ), Mockito.eq( "Kennwort stimmt nicht" ) );
   }
 
   @Test

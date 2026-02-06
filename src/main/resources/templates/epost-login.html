@@ -7,6 +7,7 @@
 
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+        <link rel="stylesheet" th:href="@{/css/style.css}"/>
 
         <style>
 
@@ -23,29 +24,44 @@
     </head>
     <body>
 
-        <div id="username-page">
-            
-            <div class="username-form" style="background: white; padding: 40px; border-radius: 10px;">
+        <div id="login-page">
+
+            <div class="login-form" >
 
                 <h2 class="mb-4">🚀Login ePost</h2>
 
                 <form th:action="@{/epost/login}" method="post"  id="usernameForm">
 
-<label for="userName">Benutzer</label>&nbsp;&nbsp;                    
-<select name="userName" id="userName">
-  <option value="abrad">Alons Brader (abrad)</option>
-  <option value="ehart">Egon Hartling (ehart)</option>
-  <option value="gfulk">Gert Fulken (gfulk)</option>
-  <option value="mhuan">Maria Huana (mhuan)</option>
-</select>
-<br/><br/>
-                    
-<label for="userPassword">Kennwort</label>&nbsp;&nbsp;
+                    <label for="userName">Benutzer</label>&nbsp;&nbsp;                    
+                    <select name="userName" id="userName">
+                        
+                        <option th:each="user, iterStat : ${listBenutzer}" th:value="${user.userName}" >
+                            
+                            <span th:text="${user.vorName}">name</span>&nbsp;
+                            <span th:text="${user.nachName}">name</span>&nbsp;(
+                            <span th:text="${user.userName}">name</span>)
+                            
+                        </option>
+
+                        <option value="nvorh">Nicht Vorhanden (nvorh)</option>
+                    </select>
+
+                    <br/><br/>
+
+                    <label for="userPassword">Kennwort</label>&nbsp;&nbsp;
                     <input value="geheim" type="text" id="userPassword" name="userPassword" class="form-control mb-3" placeholder="Kennwort" required /><br/><br/>
                     <br/>
                     <button type="submit" class="btn btn-primary w-100">Login</button>
                 </form>
+
+                <br/>
+
+                <section th:if="${error_message}" class="detail-error-message">
+                    <p th:text="${error_message}"></p>
+                </section>
+
             </div>
+
         </div>
 
     </body>

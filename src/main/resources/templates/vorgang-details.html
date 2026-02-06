@@ -6,7 +6,7 @@
         <title>Vorgang Details</title>
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-        <link rel="stylesheet" th:href="@{/css/style.css}">
+        <link rel="stylesheet" th:href="@{/css/style.css}" />
     </head>
     <body>
         <h1>ePost - Vorgang Details</h1>
@@ -38,7 +38,7 @@
                     <p><strong>PLZ </strong>    <span th:text="${adresse.postleitzahl}">x</span></p>
                     <p><strong>Land </strong>   <span th:text="${adresse.land}">x</span></p>
                 </div>
-                
+
             </div>
 
         </section>
@@ -72,9 +72,9 @@
 
         </div>  
 
-<section th:if="${error_message}" class="detail-error-message">
-    <p th:text="${error_message}"></p>
-</section>
+        <section th:if="${error_message}" class="detail-error-message">
+            <p th:text="${error_message}"></p>
+        </section>
 
     </body>
 

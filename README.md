@@ -177,11 +177,43 @@ Mit dem Button "PDF anzeigen" kann das PDF-Dokument angezeigt werden.
 Mit dem Button "Zurück zur Liste" wird wieder in die Vorgangsanzeige verzweigt.
 
 
+# Getting started
+
+## application.properties
+  
+
+Es müssen hier Verzeichnispfade eingetragen werden, auf welche der aktuelle Benutzer schreibrechte hat.  
+
+Die Pfade werden durch das Programm jedes mal neu angelegt.  
 
  
+```
+app.epost.verzeichnis=/mnt/hd4tbb/daten/epost
+app.epost.verzeichnis_input=/mnt/hd4tbb/daten/epost/input
+app.epost.verzeichnis_root=/mnt/hd4tbb/daten/epost/root_verarbeitung
+```
+  
+  
 
 
+## application-mysql.properties
 
+In dieser Datei muss die Einstellung für die Datenbank auf "create-drop" geändert werden.  
+
+  
+
+```
+#spring.jpa.hibernate.ddl-auto=create-drop
+spring.jpa.hibernate.ddl-auto=update
+```
+
+
+## Erster start
+
+Wird die Anwendung gestartet, werden in der Datenbank die Tabellen angelegt und mit den hinterlegten Testdaten bestückt.  
+  
+Dieses Verhalten wird durch die Klasse de.ea234.epost.model.AppTestInit ausgelöst.  
+  
 
 
 

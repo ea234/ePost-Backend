@@ -14,8 +14,6 @@ import de.ea234.epost.model.dokument.Dokument;
 import de.ea234.epost.services.ServiceListDokument;
 import de.ea234.epost.util.FkHtml;
 import de.ea234.epost.util.FkPaginiernummer;
-import java.io.IOException;
-import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -29,25 +27,9 @@ public class RestControllerDokument {
 
   private final ServiceListDokument serviceListDokument;
 
-  private final EPostConfig ePostConfig;
-
-  private final TestDokumentErsteller testDokumentErsteller;// = new TestDokumentErsteller();
-
-  public RestControllerDokument( ServiceListDokument pServiceListDokument, EPostConfig pEPostConfig, TestDokumentErsteller pTestDokumentErsteller )
+  public RestControllerDokument( ServiceListDokument pServiceListDokument )
   {
     serviceListDokument = pServiceListDokument;
-
-    ePostConfig = pEPostConfig;
-
-    testDokumentErsteller = pTestDokumentErsteller;
-  }
-
-  @GetMapping(path = "/ping", produces = MediaType.TEXT_PLAIN_VALUE)
-  public String ping()
-  {
-    // http://localhost:8080/api/dokument/ping
-
-    return "RestControllerDokument " + System.currentTimeMillis();
   }
 
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
@@ -70,32 +52,6 @@ public class RestControllerDokument {
     return serviceListDokument.getAnzahl();
   }
 
-  @GetMapping(path = "/testGetStaticDokument/{pfad}", produces = MediaType.APPLICATION_PDF_VALUE)
-  public ResponseEntity<byte[]> testGetStaticDokument( @PathVariable String pfad )
-  {
-    // http://localhost:8080/api/dokument/testGetStaticDokument/static/2026012100002.pdf
-    // http://localhost:8080/api/dokument/testGetStaticDokument/static/2026012100004.pdf
-    // http://localhost:8080/api/dokument/testGetStaticDokument/static/a.pdf
-
-    try (InputStream in = getClass().getClassLoader().getResourceAsStream( pfad ))
-    {
-      if ( in == null )
-      {
-        return ResponseEntity.notFound().build();
-      }
-
-      byte[] bytes = in.readAllBytes();
-
-      return ResponseEntity.ok().contentType( MediaType.APPLICATION_PDF ).body( bytes );
-    }
-    catch (IOException ex)
-    {
-      log.error( "RestControllerDokument - testGetDokument", ex );
-
-      return ResponseEntity.status( HttpStatusCode.valueOf( 404 ) ).build();
-    }
-  }
-
   @GetMapping(path = "/paginr/{paginr}", produces = MediaType.APPLICATION_PDF_VALUE)
   public ResponseEntity<byte[]> getDokumentByPaginiernummer( @PathVariable String paginr )
   {
@@ -116,7 +72,7 @@ public class RestControllerDokument {
 
       String str_error_text = "Fehler: Das Dokument fuer die Paginiernummer wurde nicht gefunden ";
 
-      return ResponseEntity.badRequest().contentType( MediaType.TEXT_PLAIN ).body( str_error_text.getBytes( StandardCharsets.UTF_8 ) );
+      return ResponseEntity.status( HttpStatusCode.valueOf( 404) ).contentType( MediaType.TEXT_PLAIN ).body( str_error_text.getBytes( StandardCharsets.UTF_8 ) );
     }
 
     log.info( "RestControllerDokument - PagiNr fehler " + paginr );

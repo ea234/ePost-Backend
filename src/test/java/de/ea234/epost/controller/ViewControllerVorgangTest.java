@@ -38,6 +38,8 @@ import de.ea234.epost.model.kunden.Adresse;
 import de.ea234.epost.model.benutzer.Benutzer;
 import de.ea234.epost.model.RequestContext;
 import de.ea234.epost.config.EPostConfig;
+import java.util.HashMap;
+import java.util.Map;
 
 @WebMvcTest(ViewControllerVorgang.class)
 public class ViewControllerVorgangTest {
@@ -85,6 +87,7 @@ public class ViewControllerVorgangTest {
     vorgang.setWfAktivitaet( WorkflowAktivitaet.VORGANG_BEARBEITEN.toString() );
     vorgang.setWfStatus( WorkflowStatus.NEU.toString() );
     vorgang.setBearbeiter( null );
+    vorgang.setVorgangTypNr( "12345" );
 
     kunde = new Kunde();
     kunde.setAddresse( new Adresse() );
@@ -97,6 +100,13 @@ public class ViewControllerVorgangTest {
 
     when( serviceListKunde.getKundeByStammnummer( "STAMM1" ) )
       .thenReturn( kunde );
+
+    Map<String, String> dummyTypMap = new HashMap<String, String>();
+
+    dummyTypMap.put( "12345", "VG_12345" );
+
+    when( serviceListVorgangstypen.getMapUidZuBezeichnung() ).thenReturn( dummyTypMap );
+
   }
 
   @Test
@@ -114,7 +124,8 @@ public class ViewControllerVorgangTest {
       .sessionAttr( "aktiverBenutzer", benutzer ) )
       .andExpect( status().isOk() )
       .andExpect( view().name( "vorgang-details" ) )
-      .andExpect( model().attribute( "can_claim", true ) );
+      .andExpect( model().attribute( "can_claim", false ) )
+      .andExpect( model().attribute( "can_close", true ) );
 
     verify( serviceListVorgaenge ).setVorgangInBearbeitung( "123", benutzer );
   }
@@ -130,8 +141,11 @@ public class ViewControllerVorgangTest {
       .andExpect( view().name( "vorgang-details" ) )
       .andExpect( model().attributeExists( "error_message" ) )
       .andExpect( model().attribute( "error_message",
-        "Fehler: Der Vorgang befindet sich bereits in Bearbeitung" ) );
+        "Fehler: Der Vorgang befindet sich bereits in Bearbeitung" ) )
+      .andExpect( model().attribute( "can_claim", false ) )
+      .andExpect( model().attribute( "can_close", false ) );
 
+    
     verify( serviceListVorgaenge, never() )
       .setVorgangInBearbeitung( any(), any() );
   }

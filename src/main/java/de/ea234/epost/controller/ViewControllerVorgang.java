@@ -172,7 +172,6 @@ public class ViewControllerVorgang {
     model.addAttribute( "currentPage", page );
     model.addAttribute( "currentSize", size );
     model.addAttribute( "totalPages", (int) Math.ceil( list_vorgaenge.size() / (double) size ) );
-//    <p><span th:text="${typMap[vorgang.vorgangTypNr]}">Typ Bezeichnung</span></p>
 
     /*
      * View-Namen fuer die Vorgangsliste zurückgeben
@@ -299,19 +298,11 @@ public class ViewControllerVorgang {
       return "redirect:/epost";
     }
 
-    model.addAttribute( "benutzer", aktiver_benutzer );
-
     Vorgang bestehender_vorgang = serviceListVorgaenge.getVorgangByEPostId( id );
-
-    model.addAttribute( "vorgang", bestehender_vorgang );
 
     Kunde bestehender_kunde = serviceListKunde.getKundeByStammnummer( bestehender_vorgang.getStammNr() );
 
-    model.addAttribute( "kunde", bestehender_kunde );
-
     Adresse best_adresse = bestehender_kunde.getAddresse();
-
-    model.addAttribute( "adresse", best_adresse );
 
     boolean ist_aktivitaet_bearbeiten = bestehender_vorgang.istAktivitaet( WorkflowAktivitaet.VORGANG_BEARBEITEN.toString() );
 
@@ -346,9 +337,13 @@ public class ViewControllerVorgang {
     model.addAttribute( "ist_aktivitaet_bearbeiten", ist_aktivitaet_bearbeiten );
     model.addAttribute( "ist_status_bearbeitung", ist_status_bearbeitung );
     model.addAttribute( "ist_bearbeiter_gleich_benutzer", ist_status_bearbeitung );
-    
+
     model.addAttribute( "typMap", serviceListVorgangstypen.getMapUidZuBezeichnung() );
 
+    model.addAttribute( "kunde", bestehender_kunde );
+    model.addAttribute( "adresse", best_adresse );
+    model.addAttribute( "vorgang", bestehender_vorgang );
+    model.addAttribute( "benutzer", aktiver_benutzer );
 
     return "vorgang-details";
   }
@@ -404,6 +399,14 @@ public class ViewControllerVorgang {
     if ( can_claim )
     {
       bestehender_vorgang = serviceListVorgaenge.setVorgangInBearbeitung( id, aktiver_benutzer );
+
+      ist_status_bearbeitung = true;
+
+      ist_status_beendet = false;
+
+      can_claim = false; // Vorgang wurde grade angenommen, nicht nochmal annehmen
+      
+      can_close = true; // Vorgang kann nun geschlossen werden, da aktueller Benutzer gleich Bearbeiter
     }
     else
     {
@@ -427,15 +430,9 @@ public class ViewControllerVorgang {
       model.addAttribute( "error_message", error_message );
     }
 
-    model.addAttribute( "vorgang", bestehender_vorgang );
-
     Kunde bestehender_kunde = serviceListKunde.getKundeByStammnummer( bestehender_vorgang.getStammNr() );
 
-    model.addAttribute( "kunde", bestehender_kunde );
-
     Adresse best_adresse = bestehender_kunde.getAddresse();
-
-    model.addAttribute( "adresse", best_adresse );
 
     model.addAttribute( "can_claim", can_claim );
     model.addAttribute( "can_close", can_close );
@@ -445,7 +442,12 @@ public class ViewControllerVorgang {
     model.addAttribute( "ist_bearbeiter_gleich_benutzer", ist_status_bearbeitung );
 
     model.addAttribute( "typMap", serviceListVorgangstypen.getMapUidZuBezeichnung() );
-    
+
+    model.addAttribute( "kunde", bestehender_kunde );
+    model.addAttribute( "adresse", best_adresse );
+    model.addAttribute( "vorgang", bestehender_vorgang );
+    model.addAttribute( "benutzer", aktiver_benutzer );
+
     return "vorgang-details";
   }
 
@@ -495,6 +497,11 @@ public class ViewControllerVorgang {
     if ( can_close )
     {
       bestehender_vorgang = serviceListVorgaenge.setVorgangBearbeitungAbgeschlossen( id, aktiver_benutzer );
+
+      ist_status_bearbeitung = false;
+
+      can_close = false;
+      can_claim = false;
     }
     else
     {
@@ -518,18 +525,23 @@ public class ViewControllerVorgang {
       model.addAttribute( "error_message", error_message );
     }
 
-    model.addAttribute( "vorgang", bestehender_vorgang );
-
     Kunde bestehender_kunde = serviceListKunde.getKundeByStammnummer( bestehender_vorgang.getStammNr() );
-
-    model.addAttribute( "kunde", bestehender_kunde );
 
     Adresse best_adresse = bestehender_kunde.getAddresse();
 
-    model.addAttribute( "adresse", best_adresse );
+    model.addAttribute( "can_claim", can_claim );
+    model.addAttribute( "can_close", can_close );
+
+    model.addAttribute( "ist_aktivitaet_bearbeiten", ist_aktivitaet_bearbeiten );
+    model.addAttribute( "ist_status_bearbeitung", ist_status_bearbeitung );
+    model.addAttribute( "ist_bearbeiter_gleich_benutzer", ist_status_bearbeitung );
 
     model.addAttribute( "typMap", serviceListVorgangstypen.getMapUidZuBezeichnung() );
-    
+
+    model.addAttribute( "kunde", bestehender_kunde );
+    model.addAttribute( "adresse", best_adresse );
+    model.addAttribute( "vorgang", bestehender_vorgang );
+    model.addAttribute( "benutzer", aktiver_benutzer );
 
     return "vorgang-details";
   }

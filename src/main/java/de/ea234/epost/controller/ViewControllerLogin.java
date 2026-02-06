@@ -33,6 +33,8 @@ public class ViewControllerLogin {
   @GetMapping("/epost")
   public String showEPostLogIn( Model model )
   {
+    model.addAttribute( "listBenutzer", serviceListBenutzer.getList() );
+
     return "epost-login";
   }
 
@@ -57,7 +59,7 @@ public class ViewControllerLogin {
 
       log.info( "Benutzer nicht gefunden" );
 
-      model.addAttribute( "loginError", "Benutzer nicht gefunden" );
+      model.addAttribute( "error_message", "Benutzer nicht gefunden" );
     }
     else
     {
@@ -70,8 +72,10 @@ public class ViewControllerLogin {
         return "redirect:/vorgaenge";
       }
 
-      model.addAttribute( "loginError", "Kennwort stimmt nicht" );
+      model.addAttribute( "error_message", "Kennwort stimmt nicht" );
     }
+
+    model.addAttribute( "listBenutzer", serviceListBenutzer.getList() );
 
     return "epost-login";
   }
@@ -94,6 +98,8 @@ public class ViewControllerLogin {
     }
 
     model.addAttribute( "loginInfo", "Benutzer wurde ausgeloggt" );
+
+    model.addAttribute( "listBenutzer", serviceListBenutzer.getList() );
 
     return "epost-login";
   }

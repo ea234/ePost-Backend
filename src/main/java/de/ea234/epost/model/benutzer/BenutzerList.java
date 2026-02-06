@@ -33,6 +33,13 @@ public class BenutzerList implements ServiceListBenutzer {
 
   public void add( Benutzer pBenutzer )
   {
+    Benutzer bestehender_benutzer = getBenutzerByUserName( pBenutzer.getUserName() );
+
+    if ( bestehender_benutzer == null )
+    {
+      benutzerRepository.save( pBenutzer );
+    }
+
     getList().add( pBenutzer );
   }
 
@@ -49,39 +56,5 @@ public class BenutzerList implements ServiceListBenutzer {
   public Benutzer getBenutzerByUserName( String pUserName )
   {
     return this.getList().stream().filter( p -> p.istUserName( pUserName ) ).findFirst().orElse( null );
-  }
-
-  public void init()
-  {
-    doTestDaten();
-  }
-
-  private void doTestDaten()
-  {
-    System.out.println( "🔴 doTestdaten Kunde" );
-
-    addIniBenutzer( "abrad", "Alons", "Brader" );
-    addIniBenutzer( "ehart", "Egon", "Hartling" );
-    addIniBenutzer( "sniss", "Sabine", "Nissen" );
-    addIniBenutzer( "mhuan", "Maria", "Huana" );
-  }
-
-  private void addIniBenutzer( String pUserName, String pVorname, String pNachname )
-  {
-    Benutzer bestehender_benutzer = getBenutzerByUserName( pUserName );
-
-    if ( bestehender_benutzer == null )
-    {
-      Benutzer neuer_benutzer = new Benutzer();
-
-      neuer_benutzer.setUserName( pUserName );
-      neuer_benutzer.setVorName( pVorname );
-      neuer_benutzer.setNachName( pNachname );
-      neuer_benutzer.setEmail( pVorname + "." + pNachname + "@firma.de" );
-
-      neuer_benutzer.setUserPassword( pUserName );
-
-      benutzerRepository.save( neuer_benutzer );
-    }
   }
 }

@@ -343,8 +343,14 @@ a:hover {
 }
 
 .detail-error-message {
-    color: red; 
+    color: red;
     border-top: 2px solid black;
     padding-top: 8px;
     margin-top: 12px;
+}
+
+.login-form {
+    background: white;
+    padding: 40px;
+    border-radius: 10px;
 }
