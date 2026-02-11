@@ -12,6 +12,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import java.security.SecureRandom;
+import javax.crypto.SecretKeyFactory;
 
 @Entity
 @Table(name = "benutzer")
@@ -66,11 +67,18 @@ public class Benutzer {
     userHashSalt = userHashSalt1.toString();
 
     userHashPassword = pPassword;
+    
+    
   }
 
   public boolean checkPassword( String pPassword )
   {
     return userName.equals( pPassword ) || "geheim".equals( pPassword ); // ersteinmal dass hier
+  }
+  
+  public String getVorUndNachname()
+  {
+    return vorName + " " + nachName;
   }
 
 //  
@@ -110,4 +118,12 @@ public class Benutzer {
 //  
 //  
 //  }
+  
+  
+  
+  
+  
+  
+  
+  
 }

@@ -167,7 +167,47 @@ Das ist eine automatische Aktivität, welche im Hintergrund ausgeführt wird.
   
 Schlussendlich werden die Vorgänge in die Aktivität "Ende" weitergeleitet. 
 
+<br/>
 
-<br/>---
+![ep_beendete_vorgaenge_02.jpg](./img/ep_beendete_vorgaenge_02.jpg)
+<br/>
+
+
+### Kundenliste 
+Aus der Ansicht der Vorgänge wird nun mit dem Button "Kunden" in die Anzeige für die 
+Kundenliste verzweigt. Es werden hier die Kunden der Anwendung angezeigt.
+
+<br/>
+
+![ep_kundenliste.jpg](./img/ep_kundenliste.jpg)
+
+<br/>
+Aus der Kundenliste heraus, kann in die Detailansicht für einen Kunden verzweigt werden. 
+  
+
+
+### Kundendetails mit Unterlagenhistorie
+
+![ep_kundendetails_mit_unterlagenhistorie.jpg](./img/ep_kundendetails_mit_unterlagenhistorie.jpg)
+<br/>
+
+In der Kundendetail-Ansicht werden die Daten für den Kunden aufgelistet. 
+Sind Unterlagehinstorien-Datenstäze vorhanden, wird die Unterlagenhistorie angezeigt.
+  
+  
+### Liste der Vorgangstypen
+Mit der Schaltfläche "UIDs" kann in die Liste ver Vorgangstypen verzweigt werden. 
+  
+
+Vorgangstyp = Dokumenttyp = UID
+   
+Ein Vorgangstyp ist eine Umschreibung für einen Geschäftsvorfall.  
+Ein Vorgangstyp hat einen Lang- und einen Kurztext.  
+Das war im Altsystem auch so vorhanden, wo die bestehende Datenbanktabelle für den Unterlagentext nur 50 Zeichen bereitstellte.  
+
+<br/>
+
+![ep_liste_vorgangstypen.jpg](./img/ep_liste_vorgangstypen.jpg)
+<br/>
 
 

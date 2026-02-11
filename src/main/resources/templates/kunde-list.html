@@ -15,7 +15,7 @@
             Version <span th:text="${appVersion}">1.0.0</span>
         </p>    
         <p style="color: #666; font-size: 12px;">
-            Angemeldet als <span th:text="${benutzer.userName}">benutzer</span> <span th:text="${benutzer.vorName}">vorname</span>
+            Angemeldet als <span th:text="${benutzer.userName}">benutzer</span> <span th:text="${benutzer.vorName}">vorname</span> <span th:text="${benutzer.nachName}">nachname</span>
         </p>
 
         <div class="actions">
@@ -24,6 +24,13 @@
                 <a th:href="@{/epost/logout}"  class="btn-primary">Log Out</a>
                 <a th:href="@{/vorgaenge}"     class="btn-primary">Vorgaenge</a>
                 <a th:href="@{/vorgangstypen}" class="btn-primary">UIDs</a>
+                &nbsp;&nbsp;
+                <a th:href="@{/kunden( page=${currentPage}, sort='id',  order=${currentSort == 'id' and currentOrder == 'asc' ? 'desc' : 'asc'})}" class="btn-filter">Sort. Stamm-Nr</a>
+                &nbsp;
+                <a th:href="@{/kunden( page=${currentPage}, sort='stammnr',  order=${currentSort == 'stammnr' and currentOrder == 'asc' ? 'desc' : 'asc'})}" class="btn-filter">Sort. Stamm-Nr</a>
+                <a th:href="@{/kunden( page=${currentPage}, sort='vorname',  order=${currentSort == 'vorname' and currentOrder == 'asc' ? 'desc' : 'asc'})}" class="btn-filter">Sort. Vorname</a>
+                <a th:href="@{/kunden( page=${currentPage}, sort='nachname', order=${currentSort == 'nachname' and currentOrder == 'asc' ? 'desc' : 'asc'})}" class="btn-filter">Sort. Nachname</a>
+                
             </div>  
 
         </div>
@@ -72,11 +79,11 @@
         </table>
         
         <div class="pagination">
-            <a th:if="${currentPage > 0}"  th:href="@{/kunden(page=${currentPage - 1})}">Zurück</a>
+            <a th:if="${currentPage > 0}"  th:href="@{/kunden(page=${currentPage - 1}, sort=${currentSort), order=${currentOrder)}">Zurück</a>
 
             <span>Seite <span th:text="${currentPage + 1}">1</span>  von <span th:text="${totalPages}">10</span></span>
 
-            <a th:if="${currentPage + 1 < totalPages}"  th:href="@{/kunden(page=${currentPage + 1})}">Weiter</a>
+            <a th:if="${currentPage + 1 < totalPages}"  th:href="@{/kunden(page=${currentPage + 1}, sort=${currentSort), order=${currentOrder))}">Weiter</a>
         </div>    
 
     </body>

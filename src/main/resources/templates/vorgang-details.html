@@ -20,7 +20,12 @@
                 <p><strong>Stammnummer </strong>       <span th:text="${vorgang.stammNr}"      >x</span></p>
                 <p><strong>Vertragsnummer </strong>    <span th:text="${vorgang.vertragNummer}">x</span></p>
                 <p><strong>UID </strong>               <span th:text="${typMap[vorgang.vorgangTypNr]}">Typ Bezeichnung</span></p>
-                <p><strong>Bearbeiter </strong>        <span th:text="${vorgang.bearbeiter}"   >x</span></p>
+                <p><strong>Datum Eingang </strong>     <span th:text="${#dates.format(vorgang.datumEingang, 'dd.MM.yyyy HH:mm')}" >x</span></p>
+                
+                <p><strong>Datum Ende Geplant </strong>      <span th:text="${vorgang.datumEndeGeplant != null} ? ${#dates.format(vorgang.datumEndeGeplant, 'dd.MM.yyyy HH:mm')} : 'kein Datum vorhanden'" >x</span></p>
+                <p><strong>Datum Ende Tatsächlich </strong>  <span th:text="${vorgang.datumEndeTatsaechlich != null} ? ${#dates.format(vorgang.datumEndeTatsaechlich, 'dd.MM.yyyy HH:mm')} : 'kein Datum vorhanden'" >x</span></p>
+                
+                <p><strong>Bearbeiter </strong>        <span th:text="${vorgang.bearbeiter}"   >x</span> <span th:text="${bearbeiter_vor_und_nachname}"   ></span></p>
             </div>
 
             <div class="kunde-layout">
@@ -29,7 +34,7 @@
                     <p><strong>Vorname </strong>      <span th:text="${kunde.vorName}"      >x</span></p>
                     <p><strong>Nachname </strong>     <span th:text="${kunde.nachName}"     >x</span></p>
                     <p><strong>email </strong>        <span th:text="${kunde.email}"        >x</span></p>
-                    <p><strong>Geburtsdatum </strong> <span th:text="${kunde.geburtsDatum}" >x</span></p>
+                    <p><strong>Geburtsdatum </strong> <span th:text="${#dates.format(kunde.geburtsDatum, 'dd.MM.yyyy')}" >x</span></p>
                 </div>
 
                 <div class="adresse-card">

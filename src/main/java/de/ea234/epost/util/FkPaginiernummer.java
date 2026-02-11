@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 
 import de.ea234.epost.model.vorgang.TagesEingang;
 
-
 @Component
 @AllArgsConstructor
 public class FkPaginiernummer {
@@ -20,7 +19,7 @@ public class FkPaginiernummer {
     if ( tages_eingang == null )
     {
       serviceTagesEingang.updateTageseingang( pDatumLong, 1 );
-      
+
       return 1;
     }
 
@@ -42,27 +41,16 @@ public class FkPaginiernummer {
     {
       tagesDokumentDatum = datum_akt;
     }
-    
+
     long tages_dok_nr = getTagesDokumentNr( tagesDokumentDatum );
 
-    tages_dok_nr++;
-    
+    tages_dok_nr ++;
+
     saveTagesDokumentNr( datum_akt, tages_dok_nr );
 
-    System.out.println( "de.ea234.epost.util.FkPaginiernummer.getNewPaginiernummer() " +  + tagesDokumentDatum + String.format( "%05d", tages_dok_nr ));
+    System.out.println( "de.ea234.epost.util.FkPaginiernummer.getNewPaginiernummer() " +  + tagesDokumentDatum + String.format( "%05d", tages_dok_nr ) );
     return "" + tagesDokumentDatum + String.format( "%05d", tages_dok_nr );
   }
-
-//  public String getNewPaginiernummer( long pDatumLong )
-//  {
-//    long tages_dok_nr = getTagesDokumentNr( pDatumLong );
-//
-//    tages_dok_nr ++;
-//
-//    saveTagesDokumentNr( pDatumLong, tages_dok_nr );
-//
-//    return "" + pDatumLong + String.format( "%05d", tages_dok_nr );
-//  }
 
   public static boolean istPaginiernummer( String pEingabe )
   {

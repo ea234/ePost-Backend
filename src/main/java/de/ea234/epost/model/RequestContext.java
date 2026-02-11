@@ -39,5 +39,4 @@ public class RequestContext {
   {
     log.info( "------------------- Destroying RequestContext: {}", requestId );
   }
-
 }

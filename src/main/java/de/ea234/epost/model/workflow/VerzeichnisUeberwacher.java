@@ -201,11 +201,11 @@ public class VerzeichnisUeberwacher implements Runnable {
 
           new_vorgang.setDatumEndeGeplant( null ); // noch kein geplantes End-Datum
 
-          byte[] bytes = null;
+          byte[] dokument_bytes = null;
 
           try (InputStream in = Files.newInputStream( path_pdf_datei ))
           {
-            bytes = in.readAllBytes();
+            dokument_bytes = in.readAllBytes();
           }
           catch (IOException err_inst)
           {
@@ -214,7 +214,7 @@ public class VerzeichnisUeberwacher implements Runnable {
             knz_verarbeitung_ok = false;
           }
 
-          if ( bytes != null )
+          if ( dokument_bytes != null )
           {
             new_dok = new Dokument();
 
@@ -222,7 +222,7 @@ public class VerzeichnisUeberwacher implements Runnable {
 
             new_dok.setDokumentID( dokument_id.toString() );
 
-            new_dok.setDateiDaten( bytes );
+            new_dok.setDateiDaten( dokument_bytes );
 
             new_dok.setPaginierNr( instanz_xml_vorgang.getPaginierNr() );
 

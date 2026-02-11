@@ -14,6 +14,8 @@ public interface ServiceListKunde {
   public Kunde getIndex( int pIndex );
   
   public Kunde getKundeByStammnummer( String pStammnummer );
+  
+  public List<Kunde> getSortedList( String pSortedBy, String pSortOrder );
 
   public void add( Kunde pKunde );
 }

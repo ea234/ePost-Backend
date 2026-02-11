@@ -45,57 +45,6 @@ import java.util.Date;
  * </pre>
  */
 public class FkDatumLong {
-  //public void startDatumsloopWoche( long pDatumStichtag )
-  //{
-  //  if ( pDatumStichtag < 20250101 )
-  //  {
-  //    return;
-  //  }
-  //
-  //  Date datum_parameter = FkDatumLong.parseToDate( "" + pDatumStichtag );
-  //
-  //  Date datum_montag = FkDatum.getDateWocheMontag( datum_parameter );
-  //
-  //  Date datum_sonntag = FkDatum.getDateWocheSonntag( datum_parameter );
-  //
-  //  long datum_long_von = FkDatum.getLong( datum_montag  );
-  //  long datum_long_bis = FkDatum.getLong( datum_sonntag );
-  //
-  //  Calendar datum_ergebnis = Calendar.getInstance();
-  //
-  //  datum_ergebnis.setTime( datum_montag );
-  //
-  //  long kalender_woche = datum_ergebnis.get( Calendar.WEEK_OF_YEAR );
-  //
-  //  String verzeichnis_auswertung =  "c:/daten/gesamt_status_woche/";
-  //
-  //  String datei_name_auswertung = verzeichnis_auswertung + "app_status_gesamt_kw_" + ( kalender_woche < 10 ? "0" : "" ) + kalender_woche + "_von_" + datum_long_von + "_bis_" + pDatumBis + ".txt";
-  //
-  //  String log_auswertung = "Gesamtstatus KW " + kalender_woche + " von " + FkDatum.getWochentagDatum( datum_long_von ) + " bis " + FkDatum.getWochentagDatum( datum_long_bis );
-  //
-  //  FkDatei.schreibeDatei( datei_name_auswertung, log_auswertung );
-  //}
-  //
-  //private static void startLoopDatumsbereich( String pDatumVon, String pDatumBis )
-  //{
-  //  long datum_long_von = FkDatumLong.parseToLong( pDatumVon );
-  //  long datum_long_bis = FkDatumLong.parseToLong( pDatumBis );
-  //
-  //  int zaehler_tage_aktuell = 0;
-  //  int zaehler_tage_maximal = 30;
-  //
-  //  if ( ( datum_long_von > 0 ) && ( datum_long_bis > 0 ) )
-  //  {
-  //    while ( ( datum_long_von <= datum_long_bis ) && ( zaehler_tage_aktuell < zaehler_tage_maximal ) )
-  //    {
-  //      FkLogger.wl( "Datum " + datum_long_von + " " + FkDatumLong.parseToString( "" + datum_long_von ) );
-  //
-  //      datum_long_von = FkDatum.longDateAddTage( datum_long_von, 1 );
-  //
-  //      zaehler_tage_aktuell++;
-  //    }
-  //  }
-  //}
 
   /**
    * <pre>

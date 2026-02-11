@@ -29,9 +29,9 @@ public class WorkflowBackgroundAgent implements Runnable {
 
   private boolean m_knz_verz_ueberwachung_laeuft = false;
 
-  private UnterlagenHistorieRepository unterlagenHistorieRepository;
+  private final UnterlagenHistorieRepository unterlagenHistorieRepository;
 
-  private ServiceListVorgangstypen serviceListVorgangstypen;
+  private final ServiceListVorgangstypen serviceListVorgangstypen;
 
   private List< WfAktivitaet> list_wf_aktivitaeten = null;
 
@@ -98,9 +98,9 @@ public class WorkflowBackgroundAgent implements Runnable {
 
   private int doActivities()
   {
-    System.out.println( "#######################################################" );
-    System.out.println( "### doActivities  " );
-    System.out.println( "#######################################################" );
+    log.debug("#######################################################" );
+    log.debug( "### doActivities  " );
+    log.debug( "#######################################################" );
 
     for ( WfAktivitaet cur_aktivitaet : getWfListAktivitaeten() )
     {
@@ -117,15 +117,15 @@ public class WorkflowBackgroundAgent implements Runnable {
 
   private int doVorgangMove( WorkflowAktivitaet pWfAktivitaet, WorkflowStatus pWfStatus, WorkflowAktivitaet pAktivitaetNext )
   {
-    System.out.println( "#### doVorgangMove " + pWfAktivitaet + ", " + pWfStatus + " " + pAktivitaetNext );
+    log.debug( "#### doVorgangMove " + pWfAktivitaet + ", " + pWfStatus + " " + pAktivitaetNext );
 
     List<Vorgang> vorgaenge = vorgangRepository.findByWfAktivitaetAndWfStatus( pWfAktivitaet.toString(), pWfStatus.toString() );
 
-    System.out.println( "#### doVorgangMove  Anzahl " + pWfAktivitaet + ", " + pWfStatus + " " + pAktivitaetNext + " " + vorgaenge.size() );
+    log.debug( "#### doVorgangMove  Anzahl " + pWfAktivitaet + ", " + pWfStatus + " " + pAktivitaetNext + " " + vorgaenge.size() );
 
     for ( Vorgang cur_vorgang : vorgaenge )
     {
-      System.out.println( "#### Vorgang PagNr " + cur_vorgang.getPaginierNr() + " Aktivität " + cur_vorgang.getWfAktivitaet() );
+      log.debug( "#### Vorgang PagNr " + cur_vorgang.getPaginierNr() + " Aktivität " + cur_vorgang.getWfAktivitaet() );
 
       cur_vorgang.setWfAktivitaet( pAktivitaetNext.toString() );
 
@@ -147,9 +147,9 @@ public class WorkflowBackgroundAgent implements Runnable {
   @Transactional
   private int doActivity( WfAktivitaet pWfAktivitaet, List<Vorgang> pListVorgaenge )
   {
-    System.out.println( "#######################################################" );
-    System.out.println( "doAktivitaet  " + pWfAktivitaet.getWorkflowAktivitaetCur().toString() + " " + pListVorgaenge.size() );
-    System.out.println( "#######################################################" );
+    log.debug( "#######################################################" );
+    log.debug( "doAktivitaet  " + pWfAktivitaet.getWorkflowAktivitaetCur().toString() + " " + pListVorgaenge.size() );
+    log.debug( "#######################################################" );
 
     if ( pListVorgaenge != null )
     {
@@ -162,9 +162,9 @@ public class WorkflowBackgroundAgent implements Runnable {
 
         if ( activity_result == 1 )
         {
-          System.out.println( "#######################################################" );
-          System.out.println( "Update " );
-          System.out.println( "#######################################################" );
+          log.debug( "#######################################################" );
+          log.debug( "Update " );
+          log.debug( "#######################################################" );
 
           cur_vorgang.setWfStatus( WorkflowStatus.READY_TO_ROUTE.toString() );
 
@@ -182,7 +182,11 @@ public class WorkflowBackgroundAgent implements Runnable {
     {
       list_wf_aktivitaeten = new ArrayList<WfAktivitaet>();
 
-      list_wf_aktivitaeten.add( new ActivityVorgangStart( WorkflowAktivitaet.START, WorkflowAktivitaet.WORKFLOW, WorkflowStatus.NEU ) );
+      ActivityVorgangStart start_aktivity = new ActivityVorgangStart( WorkflowAktivitaet.START, WorkflowAktivitaet.WORKFLOW, WorkflowStatus.NEU ) ;
+
+      start_aktivity.setServiceListVorgangstypen( serviceListVorgangstypen );
+        
+      list_wf_aktivitaeten.add( start_aktivity );
 
       list_wf_aktivitaeten.add( new ActivityWorkflow( WorkflowAktivitaet.WORKFLOW, WorkflowAktivitaet.VORGANG_BEARBEITEN, WorkflowStatus.NEU ) );
 

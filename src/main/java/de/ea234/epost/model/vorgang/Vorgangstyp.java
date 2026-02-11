@@ -1,5 +1,6 @@
 package de.ea234.epost.model.vorgang;
 
+import de.ea234.epost.util.FkDatum;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -7,6 +8,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
+import java.util.Calendar;
+import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -53,5 +56,10 @@ public class Vorgangstyp {
   public boolean isTypNr( String pTypNr )
   {
     return typNr.equals( pTypNr );
+  }
+  
+  public Date getDatumEndeGeplant( Date pDate )
+  {
+    return FkDatum.getWerktagPlusX( pDate, typPrioritaet );
   }
 }

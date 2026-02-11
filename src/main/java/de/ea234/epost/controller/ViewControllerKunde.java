@@ -6,6 +6,7 @@ import de.ea234.epost.model.benutzer.Benutzer;
 import de.ea234.epost.model.kunden.Adresse;
 import de.ea234.epost.model.kunden.Kunde;
 import de.ea234.epost.model.kunden.UhEintrag;
+import de.ea234.epost.model.vorgang.Vorgang;
 import de.ea234.epost.repository.UnterlagenHistorieRepository;
 import de.ea234.epost.services.ServiceListBenutzer;
 import de.ea234.epost.services.ServiceListKunde;
@@ -66,7 +67,9 @@ public class ViewControllerKunde {
   public String showKundenList(
     @RequestParam(defaultValue = "0") int page,
     @RequestParam(defaultValue = "10") int size,
-    Model model, HttpSession pHttpSession )
+    @RequestParam(defaultValue = "id") String sort,
+    @RequestParam(defaultValue = "asc") String order,
+     Model model, HttpSession pHttpSession )
   {
     log.info( " #### LOG #### ViewControllerKunde - showKundenList" );
 
@@ -84,11 +87,23 @@ public class ViewControllerKunde {
 
     List<Kunde> list_kunden = null;
 
+    
+    
+    
+
+    List<Vorgang> list_vorgaenge = null;
+    
+    
     if ( list_kunden == null )
     {
-      list_kunden = serviceListKunde.getList();
+      list_kunden = serviceListKunde.getSortedList( sort, order );
     }
 
+    
+    
+    
+    
+    
     /* 
      * Berechne Start- und End-Index fuer die Paginierung
      */
@@ -112,8 +127,12 @@ public class ViewControllerKunde {
     model.addAttribute( "appVersion", ePostConfig.getVersion() );
     model.addAttribute( "maxVorgaenge", 30 );
 
+    model.addAttribute("currentSort", sort);
+    model.addAttribute("currentOrder", order);
+
     model.addAttribute( "currentPage", page );
     model.addAttribute( "currentSize", size );
+    
     model.addAttribute( "totalPages", (int) Math.ceil( list_kunden.size() / (double) size ) );
 
     /*
@@ -121,6 +140,28 @@ public class ViewControllerKunde {
      */
     return "kunde-list";
   }
+  
+  
+  
+  @GetMapping("/kunden/filter/all")
+  public String setFilterAlleKunden( Model model, HttpSession pHttpSession )
+  {
+    log.info( " #### LOG #### ViewControllerKunde - setFilterAlleKunden" );
+
+    Benutzer aktiver_benutzer = (Benutzer) pHttpSession.getAttribute( "aktiverBenutzer" );
+
+    if ( aktiver_benutzer == null )
+    {
+      log.info( " #### LOG #### ViewControllerVorgang - Kein aktiver Benutzer in Session vorhanden" );
+
+      return "redirect:/epost";
+    }
+
+    pHttpSession.setAttribute( "filterVorgangsart", "alle_kunden" );
+
+    return "redirect:/vorgaenge";
+  }
+
 
   /*
    *****************************************************************************

@@ -19,7 +19,7 @@
                     <p><strong>Vorname</strong>      <span th:text="${kunde.vorName}"      >x</span></p>
                     <p><strong>Nachname</strong>     <span th:text="${kunde.nachName}"     >x</span></p>
                     <p><strong>eMail</strong>        <span th:text="${kunde.email}"        >x</span></p>
-                    <p><strong>Geburtsdatum</strong> <span th:text="${kunde.geburtsDatum}" >x</span></p>
+                    <p><strong>Geburtsdatum </strong> <span th:text="${#dates.format(kunde.geburtsDatum, 'dd.MM.yyyy')}" >x</span></p>
                 </div>
 
                 <div class="adresse-card">
@@ -49,7 +49,7 @@
                     <th>Nr</th>
                     <th>Vertrag Nr</th>
                     <th>Paginier Nr</th>
-                    <th>Typ Kurz Text</th>
+                    <th>Text</th>
                     <th>Bearbeiter</th>
                     <th>Datum Eingang</th>
                     <th>Datum erledigt</th>
@@ -65,8 +65,8 @@
                     <td><a th:href="@{/api/dokument/paginr/{paginr}(paginr=${uh.paginierNr})}" target="_blank" > <span th:text="${uh.paginierNr}" >x</span> </a></td>
                     <td th:text="${uh.typKurzText}"></td>
                     <td th:text="${uh.bearbeiter}"></td>
-                    <td th:text="${uh.datumEingang}" ></td>
-                    <td th:text="${uh.datumErledigung}" ></td>
+                    <td th:text="${#dates.format(uh.datumEingang, 'dd.MM.yyyy HH:mm')}"></td>
+                    <td th:text="${#dates.format(uh.datumErledigung, 'dd.MM.yyyy HH:mm')}"></td>
                 </tr>
             </tbody>
         </table>

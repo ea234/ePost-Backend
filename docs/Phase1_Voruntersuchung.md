@@ -52,7 +52,7 @@ Die Anwendung dient als Prototyp um eine alte Lotus-Notes-Anwendung abzulösen.
 
 ---
 
-## 4. Voruntersuchung des Produktes
+## 4. Voruntersuchung
 
 ### 4.1 Ist-Zustand
 Das zugrunde liegende Altsystem basiert auf einer Lotus-Notes-Workflow Anwendung.  
@@ -160,9 +160,8 @@ Gleiches mit der Verzeichnisüberwachung.
 
 
 ### 5.5 Haupt-Qualitätsmerkmale
-- **Zuverlässigkeit:** korrekte Erkennung und Validierung von IBANs  
+- **Zuverlässigkeit:** korrekte Verarbeitung der Vorgänge un schreiben der Unterlagenhistorie
 - **Wartbarkeit:** modularer Aufbau (Controller, Services, DTOs)  
-- **Erweiterbarkeit:** einfache Integration zusätzlicher Prüfungen  
-- **Benutzerfreundlichkeit:** klare API-Dokumentation und verständliche Fehlermeldungen  
-- **Testbarkeit:** gezielte Unit- und Integrationstests  
+- **Erweiterbarkeit:** einfache Integration zusätzlicher Workflow-Aktivitätenn  
+- **Testbarkeit:** Unittests  
 

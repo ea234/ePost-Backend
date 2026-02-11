@@ -51,9 +51,9 @@ public class AppTestInit {
 
   private void doTestDatenBenutzer()
   {
-    System.out.println( "🔴 doTestdaten Kunde" );
+    log.debug( "🔴 doTestdaten Kunde" );
 
-    addIniBenutzer( "abrad", "Alons1", "Brader1" );
+    addIniBenutzer( "abrad", "Alons", "Brader" );
     addIniBenutzer( "ehart", "Egon", "Hartling" );
     addIniBenutzer( "sniss", "Sabine", "Nissen" );
     addIniBenutzer( "mhuan", "Maria", "Huana" );

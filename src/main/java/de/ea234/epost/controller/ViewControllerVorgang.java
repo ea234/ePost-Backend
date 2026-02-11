@@ -304,9 +304,13 @@ public class ViewControllerVorgang {
 
     Adresse best_adresse = bestehender_kunde.getAddresse();
 
+    Benutzer bearbeiter_x = serviceListBenutzer.getBenutzerByUserName( bestehender_vorgang.getBearbeiter() );
+
     boolean ist_aktivitaet_bearbeiten = bestehender_vorgang.istAktivitaet( WorkflowAktivitaet.VORGANG_BEARBEITEN.toString() );
 
     boolean ist_status_bearbeitung = bestehender_vorgang.istStatus( WorkflowStatus.IN_BEARBEITUNG.toString() );
+
+    boolean ist_status_beendet = bestehender_vorgang.istStatus( WorkflowStatus.ABGESCHLOSSEN.toString() );
 
     boolean ist_bearbeiter_gleich_benutzer = bestehender_vorgang.istBearbeiter( aktiver_benutzer.getUserName() );
 
@@ -314,8 +318,9 @@ public class ViewControllerVorgang {
      * Ein Vorgang kann angenommen werden, wenn
      * - der Vorgang in der Aktivitaet "Vorgang bearbeiten" ist
      * - der Vorgang noch nicht im Status "in bearbeitung" ist
+     * - der Vorgang noch nicht beendet ist
      */
-    boolean can_claim = (ist_aktivitaet_bearbeiten) && ( ! ist_status_bearbeitung);
+    boolean can_claim = (ist_aktivitaet_bearbeiten) && ( ! ist_status_bearbeitung) && ( ! ist_status_beendet);
 
     /*
      * Ein Vorgang kann abgeschlossen werden, wenn
@@ -323,12 +328,20 @@ public class ViewControllerVorgang {
      * - der Vorgang noch im Status "in bearbeitung" ist
      * - der aktive Benutzer der Bearbeiter ist.
      */
-    boolean can_close = (ist_aktivitaet_bearbeiten) && (ist_status_bearbeitung) && (ist_bearbeiter_gleich_benutzer);
+    boolean can_close = (ist_aktivitaet_bearbeiten) && (ist_status_bearbeitung) && (ist_bearbeiter_gleich_benutzer) && ( ! ist_status_beendet);
 
     if ( ePostConfig.istTestVorgangClaimFehlermeldungen() )
     {
       can_claim = true;
       can_close = true;
+    }
+
+    model.addAttribute( "bearbeiter_vor_und_nachname", "" );
+
+    if ( bearbeiter_x != null )
+    {
+      model.addAttribute( "bearbeiter_vor_und_nachname", bearbeiter_x.getVorUndNachname() );
+
     }
 
     model.addAttribute( "can_claim", can_claim );
@@ -392,7 +405,7 @@ public class ViewControllerVorgang {
      * - der Vorgang noch im Status "in bearbeitung" ist
      * - der aktive Benutzer der Bearbeiter ist.
      */
-    boolean can_close = (ist_aktivitaet_bearbeiten) && (ist_status_bearbeitung) && (ist_bearbeiter_gleich_benutzer);
+    boolean can_close = (ist_aktivitaet_bearbeiten) && (ist_status_bearbeitung) && (ist_bearbeiter_gleich_benutzer) && ( ! ist_status_beendet);
 
     String error_message = "";
 
@@ -405,7 +418,7 @@ public class ViewControllerVorgang {
       ist_status_beendet = false;
 
       can_claim = false; // Vorgang wurde grade angenommen, nicht nochmal annehmen
-      
+
       can_close = true; // Vorgang kann nun geschlossen werden, da aktueller Benutzer gleich Bearbeiter
     }
     else
@@ -490,7 +503,7 @@ public class ViewControllerVorgang {
      * - der Vorgang noch im Status "in bearbeitung" ist
      * - der aktive Benutzer der Bearbeiter ist.
      */
-    boolean can_close = (ist_aktivitaet_bearbeiten) && (ist_status_bearbeitung) && (ist_bearbeiter_gleich_benutzer);
+    boolean can_close = (ist_aktivitaet_bearbeiten) && (ist_status_bearbeitung) && (ist_bearbeiter_gleich_benutzer) && ( ! ist_status_beendet);
 
     String error_message = "";
 
